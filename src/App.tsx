@@ -1,25 +1,70 @@
 import React from 'react';
 import logo from './logo.svg';
+
+
+import { getFirestore } from 'firebase/firestore';
+import { useFirestoreDocData, useFirestore, useFirebaseApp, FirestoreProvider } from 'reactfire';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  /*  Link, */
+  Redirect
+} from "react-router-dom";
+
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+import Test from "./components/Test"
+import Login from "./components/Login"
+import Dashboard from "./components/Dashboard"
+
+import { loadGoogleScript } from './utils/googleApiScript';
+
 import './App.css';
 
 function App() {
+
+
+  // const firestoreInstance = getFirestore(useFirebaseApp());
+
+  const [signedIn, setSignedIn] = React.useState(false)
+
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      setSignedIn(true)
+      // ...
+    } else {
+      // User is signed out
+      // ...
+      setSignedIn(false)
+    }
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // <FirestoreProvider sdk={firestoreInstance}>
+    <Router>
+
+      <Switch>
+        <Route path="/login">
+          {signedIn ? <Redirect to="/dashboard" /> : <Login></Login>}
+        </Route>
+        <Route path="/dashboard">
+          {signedIn ? <Dashboard></Dashboard> : <Redirect to="/login" />}
+        </Route>
+        <Route path="/">
+          {signedIn ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}
+
+        </Route>
+
+
+      </Switch>
+
+    </Router>
+    // </FirestoreProvider>
   );
 }
 

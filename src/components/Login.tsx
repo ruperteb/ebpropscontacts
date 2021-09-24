@@ -1,21 +1,10 @@
 import React from "react"
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signInWithCredential } from "firebase/auth";
 
-import { useAppSelector, useAppDispatch } from '../redux/hooks'
-import { navigationSlice } from '../redux/slices/navigationSlice';
 
 import {
     Button,
-    H5,
-    Icon,
-    IconSize,
     InputGroup,
-    Intent,
-    Menu,
-    MenuItem,
-    Spinner,
-    Switch,
-    Tag,
     Card,
     Elevation,
 } from "@blueprintjs/core";
@@ -70,8 +59,6 @@ interface Props {
 }
 
 export const Login: React.FunctionComponent<Props> = ({ }) => {
-
-    const dispatch = useAppDispatch()
 
     const auth = getAuth();
 

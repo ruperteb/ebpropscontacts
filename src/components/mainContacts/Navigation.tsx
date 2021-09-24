@@ -1,24 +1,11 @@
 import React from "react"
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signInWithCredential } from "firebase/auth";
 
 import { useAppSelector, useAppDispatch } from '../../redux/hooks'
-import { navigationSlice, setContactsPanelDialogOpen } from '../../redux/slices/navigationSlice';
+import { navigationSlice } from '../../redux/slices/navigationSlice';
 
 import {
     Button,
-    H5,
-    Icon,
-    IconSize,
     InputGroup,
-    Intent,
-    Menu,
-    MenuItem,
-    Spinner,
-    Switch,
-    Tag,
-    Card,
-    Elevation,
-
 } from "@blueprintjs/core";
 
 import { Classes, Popover2 } from "@blueprintjs/popover2";
@@ -61,13 +48,6 @@ display: flex;
 
 `
 
-const StyledTitleText = styled.h1`
-font-family:  "Segoe UI", sans-serif;
-margin: auto;
-/* margin-bottom: 1rem; */
-/* text-transform: uppercase; */
-`
-
 const StyledSearchInputGroup = styled(InputGroup)`
 margin: auto;
 margin-left: auto;
@@ -80,12 +60,6 @@ const StyledButton = styled(Button)`
     margin: auto;
     /* margin-top: 1rem; */
     display: flex;
-`
-
-const StyledStatusText = styled.p`
-height: 1rem;
-margin: auto;
-color: red;
 `
 
 const StyledPopoverContentDiv = styled.div`
@@ -117,13 +91,9 @@ interface Props {
 
 export const Navigation: React.FunctionComponent<Props> = ({ }) => {
 
-    const auth = getAuth();
-
     const dispatch = useAppDispatch()
 
     const contactsData = useAppSelector((state) => state.navigation.contactsData)
-
-    const contactsPanelDialogOpen = useAppSelector((state) => state.navigation.contactsPanelDialogOpen)
 
     const search = useAppSelector((state) => state.navigation.contactsSearch)
 
@@ -136,8 +106,6 @@ export const Navigation: React.FunctionComponent<Props> = ({ }) => {
     const contactsIndustryFilter = useAppSelector((state) => state.navigation.contactsIndustryFilter)
     const contactsRegionFilter = useAppSelector((state) => state.navigation.contactsRegionFilter)
     const contactsPriorityFilter = useAppSelector((state) => state.navigation.contactsPriorityFilter)
-
-
 
     var contactIndustryData = contactsData.map((contact: any) => { return contact.industry })
     
@@ -295,14 +263,6 @@ export const Navigation: React.FunctionComponent<Props> = ({ }) => {
         dispatch(navigationSlice.actions.setContactsPanelDialogOpen(true))
 
     }
-
-    
-    /* const handlePopoverClick = React.useCallback(() => {
-        if (showFilterPopup === false) {
-            setShowFilterPopup(true)
-        } else setShowFilterPopup(false)
-
-    }, []) */
 
     const handleInteraction = (nextOpenState: boolean) => {
         setShowFilterPopup(nextOpenState);

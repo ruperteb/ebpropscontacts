@@ -1,28 +1,9 @@
 import React from "react"
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signInWithCredential } from "firebase/auth";
 
 import { useAppSelector, useAppDispatch } from '../../../redux/hooks'
 import { navigationSlice } from '../../../redux/slices/navigationSlice';
 
-
-
 import {
-    Button,
-    H5,
-    Icon,
-    IconSize,
-    InputGroup,
-    Intent,
-    Menu,
-    MenuItem,
-    Spinner,
-    Switch,
-    Tag,
-    Card,
-    Elevation,
-    Panel,
-    PanelProps,
-    PanelStack2,
     Dialog,
 } from "@blueprintjs/core";
 
@@ -30,64 +11,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import styled from 'styled-components'
 
-
 import UpdateNotePanel from "./UpdateNotePanel";
-
-
-
-
-
-const StyledNavigationContainer = styled.div`
-display: grid;
-grid-template-columns: 1fr 3fr 1fr;
-height: 100px;
-box-shadow: rgb(0 0 0 / 24%) -1px 1px 3px 1px;
-
-`
-
-const StyledTitleDiv = styled.div`
-
-grid-column-start: 2;
-display: flex;
-
-`
-
-const StyledLeftDiv = styled.div`
-
-grid-column-start: 1;
-display: flex;
-
-`
-
-const StyledRightDiv = styled.div`
-
-grid-column-start: 3;
-display: flex;
-
-`
-
-const StyledTitleText = styled.h1`
-font-family:  "Segoe UI", sans-serif;
-margin: auto;
-/* margin-bottom: 1rem; */
-/* text-transform: uppercase; */
-`
-
-const StyledInputGroup = styled(InputGroup)`
-margin: 1rem;
-`
-
-const StyledButton = styled(Button)`
-    margin: auto;
-    /* margin-top: 1rem; */
-    display: flex;
-`
-
-const StyledStatusText = styled.p`
-height: 1rem;
-margin: auto;
-color: red;
-`
 
 const StyledStackContainer = styled(motion.div)`
 position: relative;
@@ -120,8 +44,6 @@ interface Props {
 }
 
 export const UpdateNoteStack: React.FunctionComponent<Props> = ({ }) => {
-
-    const auth = getAuth();
 
     const dispatch = useAppDispatch()
 

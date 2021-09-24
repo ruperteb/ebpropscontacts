@@ -1,24 +1,13 @@
 import React from "react"
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signInWithCredential } from "firebase/auth";
-import { collection, query, where, onSnapshot, getFirestore, DocumentData, doc, getDoc, getDocs, deleteDoc } from "firebase/firestore";
+import { DocumentData, doc, deleteDoc } from "firebase/firestore";
 import { db } from "../../firebaseSetup"
-import { useAppSelector, useAppDispatch } from '../../redux/hooks'
+import { useAppDispatch } from '../../redux/hooks'
 import { navigationSlice } from '../../redux/slices/navigationSlice';
 
 import {
     Button,
-    H5,
-    Icon,
-    IconSize,
-    InputGroup,
-    Intent,
     Menu,
     MenuItem,
-    Spinner,
-    Switch,
-    Tag,
-    Card,
-    Elevation,
 } from "@blueprintjs/core";
 
 import styled from 'styled-components'
@@ -96,8 +85,6 @@ interface Props {
 }
 
 export const NotesListItem: React.FunctionComponent<Props> = ({ contact, note, index }) => {
-
-    const auth = getAuth();
 
     const dispatch = useAppDispatch()
 

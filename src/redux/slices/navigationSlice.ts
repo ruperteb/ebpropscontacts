@@ -1,8 +1,8 @@
 import { /* createAsyncThunk,  */createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState, AppThunk } from '../../redux/store';
+import { RootState,/*  AppThunk  */} from '../../redux/store';
 /* import { current } from '@reduxjs/toolkit' */
 
-import { collection, query, where, onSnapshot, getFirestore, DocumentData } from "firebase/firestore";
+import { DocumentData } from "firebase/firestore";
 
 type GoogleContactsImportDetails = {
     name?: string

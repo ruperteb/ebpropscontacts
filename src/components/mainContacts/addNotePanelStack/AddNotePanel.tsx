@@ -1,37 +1,16 @@
 import React from "react"
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signInWithCredential } from "firebase/auth";
-import { collection, query, where, onSnapshot, getFirestore, DocumentData, addDoc, doc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { collection, addDoc, doc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../../firebaseSetup"
 import { useAppSelector, useAppDispatch } from '../../../redux/hooks'
 import { navigationSlice } from '../../../redux/slices/navigationSlice';
 
 import {
     Button,
-    H5,
     Icon,
-    IconSize,
-    IconName,
-    InputGroup,
     TextArea,
-    Intent,
-    Menu,
-    MenuItem,
-    Spinner,
-    Switch,
-    Tag,
-    Card,
-    Elevation,
-    Panel,
-    PanelProps,
-    PanelStack2
 } from "@blueprintjs/core";
 
-import { motion, AnimatePresence } from "framer-motion";
-
 import styled from 'styled-components'
-
-import Select, { components } from 'react-select'
-import CreatableSelect from 'react-select/creatable';
 
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -71,14 +50,6 @@ font-family:  "Segoe UI", sans-serif;
 
 `
 
-const StyledText = styled.p`
-display: flex;
-margin-left: auto;
-margin-right: auto;
-font-family:  "Segoe UI", sans-serif;
-
-`
-
 const StyledButton = styled(Button)`
     margin: auto;
     /* margin-top: 1rem; */
@@ -99,25 +70,9 @@ align-items: center;
     margin-left: 0.5rem;
 `
 
-const StyledInputGroup = styled(InputGroup)`
-margin: 0.5rem;
-`
-
 const StyledTextArea = styled(TextArea)`
 margin: 0.5rem;
 height: 100% !important;
-`
-
-const StyledValueContainerDiv = styled.div`
-display: flex;
-& > * {
-       position: none;
-       font-size: 16px;
-        /* lineHeight: "40px", */ 
-        color: #aeb8c0;
-        margin-left: 0px;
-
-    }
 `
 
 const StyledToastDiv = styled.div`
@@ -139,58 +94,6 @@ const StyledToastButton = styled(Button)`
     
 `
 
-const Placeholder = (props: any) => {
-    var placeholder = ""
-    if (props.selectProps.placeholder === "Industry") {
-        placeholder = "Industry"
-    }
-    if (props.selectProps.placeholder === "Region") {
-        placeholder = "Region"
-    }
-    return (
-
-        <components.Placeholder  {...props}>
-            <p style={{ fontSize: "16px", lineHeight: "40px", color: "#aeb8c0", display: "inline-block", marginBottom: "1px" }}>
-                {placeholder}
-            </p>
-        </components.Placeholder>
-
-
-    )
-};
-
-
-const Input = (props: any) => {
-    return (
-        <div style={{ display: "flex" }}>
-            <components.Input {...props}>
-            </components.Input>
-        </div>
-
-    )
-};
-
-//@ts-ignore
-const ValueContainer = ({ children, ...props }) => {
-    let icon: IconName = "office"
-    if (props.selectProps.placeholder === "Industry") {
-        icon = "office"
-    }
-    if (props.selectProps.placeholder === "Region") {
-        icon = "globe"
-    }
-    return (
-        //@ts-ignore
-        <components.ValueContainer {...props}>
-            <Icon style={{ display: "flex", marginRight: "12px", marginLeft: "4px", marginTop: "auto", marginBottom: "auto", color: "#5c7080" }} icon={icon} size={16} />
-            <StyledValueContainerDiv style={{ display: "flex" }}>{children}</StyledValueContainerDiv>
-        </components.ValueContainer>
-    )
-};
-
-
-
-
 interface Props {
 
 }
@@ -199,21 +102,10 @@ export const AddNotePanel: React.FunctionComponent<Props> = ({ }) => {
 
     const selectedContact = useAppSelector((state) => state.navigation.selectedContact)
 
-    /*  interface ContactDetails {
-         name: string,
-         position: string,
-         company: string,
-         phone: string,
-         email: string,
-         industry: string,
-         region: string
-     } */
-
     const [noteDetails, setNoteDetails] = React.useState({
         note: ""
     })
 
-    /*  console.log(contactDetails) */
     const dispatch = useAppDispatch()
 
     const handleToastClose = () => {

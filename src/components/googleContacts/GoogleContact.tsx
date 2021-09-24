@@ -1,22 +1,14 @@
 import React from "react"
 
 
-import { useAppSelector, useAppDispatch } from '../../redux/hooks'
+import { useAppDispatch } from '../../redux/hooks'
 import { navigationSlice } from '../../redux/slices/navigationSlice';
 
 import {
     Button,
-    H5,
     Icon,
     IconName,
-    IconSize,
     InputGroup,
-    Intent,
-    Menu,
-    MenuItem,
-    Spinner,
-    Switch,
-    Tag,
     Card,
     Elevation,
 } from "@blueprintjs/core";
@@ -24,12 +16,6 @@ import {
 import styled from 'styled-components'
 
 import Select, { components } from 'react-select'
-
-const StyledLoginContainer = styled.div`
-display: grid;
-grid-template-columns: 3fr 2fr 3fr;
-
-`
 
 const StyledCard = styled(Card)`
 position: relative;
@@ -40,12 +26,6 @@ flex-direction: column;
 flex-wrap: wrap;
 `
 
-const StyledH2 = styled.h2`
-font-family: 'Bodoni Moda', serif;
-margin: auto;
-margin-bottom: 1rem;
-text-transform: uppercase;
-`
 
 const StyledInputGroup = styled(InputGroup)`
 margin: 0.5rem;
@@ -55,12 +35,6 @@ const StyledButton = styled(Button)`
     margin: auto;
     margin-top: 0.5rem;
     display: flex;
-`
-
-const StyledStatusText = styled.p`
-height: 1rem;
-margin: auto;
-color: red;
 `
 
 const StyledValueContainerDiv = styled.div`
@@ -83,10 +57,6 @@ interface Props {
 
 export const GoogleContact: React.FunctionComponent<Props> = ({ contact }) => {
 
-    console.log(contact)
-
-
-
     const dispatch = useAppDispatch()
 
     var names: any = []
@@ -100,8 +70,6 @@ export const GoogleContact: React.FunctionComponent<Props> = ({ contact }) => {
     contact?.person?.organizations?.map((organization) => {
         organizations = [...organizations, { company: organization.name, position: organization.title }]
     })
-
-    console.log(organizations)
 
     var emailAddresses: any = []
 

@@ -1,30 +1,10 @@
 import React from "react"
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signInWithCredential } from "firebase/auth";
-import { collection, query, where, onSnapshot, getFirestore, DocumentData } from "firebase/firestore";
-import { useAppSelector, useAppDispatch } from '../../redux/hooks'
-import { navigationSlice } from '../../redux/slices/navigationSlice';
 
 import {
-    Button,
-    H5,
     Icon,
-    IconSize,
-    InputGroup,
-    Intent,
-    Menu,
-    MenuItem,
-    Spinner,
-    Switch,
-    Tag,
-    Card,
-    Elevation,
 } from "@blueprintjs/core";
 
-
 import styled from 'styled-components'
-
-
-
 
 const StyledContactContainer = styled.div`
 display: grid;
@@ -87,20 +67,6 @@ grid-column-start: 8;
 
 `
 
-const StyledLeftDiv = styled.div`
-
-grid-column-start: 1;
-display: flex;
-
-`
-
-const StyledRightDiv = styled.div`
-
-grid-column-start: 3;
-display: flex;
-
-`
-
 const StyledDetailsText = styled.p`
 font-family:  "Segoe UI", sans-serif;
 margin: auto;
@@ -108,22 +74,6 @@ margin-left: 1rem;
 font-size: 1.1rem;
 /* margin-bottom: 1rem; */
 /* text-transform: uppercase; */
-`
-
-const StyledInputGroup = styled(InputGroup)`
-margin: 1rem;
-`
-
-const StyledButton = styled(Button)`
-    margin: auto;
-    /* margin-top: 1rem; */
-    display: flex;
-`
-
-const StyledStatusText = styled.p`
-height: 1rem;
-margin: auto;
-color: red;
 `
 
 const StyledIcon = styled(Icon)`
@@ -141,10 +91,6 @@ interface Props {
 }
 
 export const ContactsListHeader: React.FunctionComponent<Props> = ({ }) => {
-
-    const auth = getAuth();
-
-    const dispatch = useAppDispatch()
 
     const iconSize = 20
 

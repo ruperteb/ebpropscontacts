@@ -1,10 +1,10 @@
 
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+/* import { getAuth, signInWithEmailAndPassword } from "firebase/auth"; */
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBNa8_a2bGNGNatOyNFJZ-ZAZBWEHHGfiQ",
+    apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     authDomain: "illstoncontacts.firebaseapp.com",
     projectId: "illstoncontacts",
     storageBucket: "illstoncontacts.appspot.com",

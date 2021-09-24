@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createRef } from "react"
 
 
-import { collection, query, where, onSnapshot, getFirestore, DocumentData } from "firebase/firestore";
+import { DocumentData } from "firebase/firestore";
 
 import { useAppSelector } from '../../redux/hooks'
 

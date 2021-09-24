@@ -1,28 +1,13 @@
 import React from "react"
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signInWithCredential } from "firebase/auth";
 
-import { useAppSelector, useAppDispatch } from '../redux/hooks'
-import { navigationSlice } from '../redux/slices/navigationSlice';
+import { useAppDispatch } from '../redux/hooks'
 
 import {
     Button,
-    H5,
-    Icon,
-    IconSize,
-    InputGroup,
-    Intent,
-    Menu,
-    MenuItem,
-    Spinner,
-    Switch,
-    Tag,
-    Card,
-    Elevation,
 } from "@blueprintjs/core";
 
 import styled from 'styled-components'
-
-
 
 
 const StyledNavigationContainer = styled.div`
@@ -74,24 +59,12 @@ margin: auto;
 /* text-transform: uppercase; */
 `
 
-const StyledInputGroup = styled(InputGroup)`
-margin: 1rem;
-`
 
 const StyledButton = styled(Button)`
     margin: auto;
     /* margin-top: 1rem; */
     display: flex;
 `
-
-const StyledStatusText = styled.p`
-height: 1rem;
-margin: auto;
-color: red;
-`
-
-
-
 
 interface Props {
 

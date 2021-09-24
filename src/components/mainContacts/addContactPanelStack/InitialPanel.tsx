@@ -1,29 +1,13 @@
 import React from "react"
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signInWithCredential } from "firebase/auth";
 
-import { useAppSelector, useAppDispatch } from '../../../redux/hooks'
+import { useAppDispatch } from '../../../redux/hooks'
 import { navigationSlice } from '../../../redux/slices/navigationSlice';
 
 import {
     Button,
-    H5,
     Icon,
-    IconSize,
-    InputGroup,
-    Intent,
-    Menu,
-    MenuItem,
-    Spinner,
-    Switch,
-    Tag,
-    Card,
-    Elevation,
-    Panel,
-    PanelProps,
-    PanelStack2
 } from "@blueprintjs/core";
 
-import { motion, AnimatePresence } from "framer-motion";
 
 import styled from 'styled-components'
 

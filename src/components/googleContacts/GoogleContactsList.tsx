@@ -7,18 +7,8 @@ import { navigationSlice } from '../../redux/slices/navigationSlice';
 
 import {
     Button,
-    H5,
-    Icon,
-    IconSize,
     InputGroup,
-    Intent,
-    Menu,
-    MenuItem,
-    Spinner,
-    Switch,
-    Tag,
     Card,
-    Elevation,
 } from "@blueprintjs/core";
 
 import styled from 'styled-components'
@@ -31,14 +21,6 @@ flex-direction: column;
 flex-wrap: wrap;
 padding: 0.5rem;
 
-`
-
-const StyledCard = styled(Card)`
-position: relative;
-margin-top: 1rem;
-display: flex;
-flex-direction: column;
-flex-wrap: wrap;
 `
 
 const StyledTitleDiv = styled.div`
@@ -72,15 +54,6 @@ margin-right: auto;
 }
 `
 
-const StyledH2 = styled.h2`
-font-family: "Segoe UI", sans-serif;
-margin: auto;
-/* margin-bottom: 1rem; */
-margin-left: auto;
-margin-right: auto;
-/* text-transform: uppercase; */
-`
-
 const StyledSearchDiv = styled.div`
 display: flex;
 /* margin-left: 1rem;
@@ -99,15 +72,6 @@ const StyledButton = styled(Button)`
     margin-left: 5px;
     display: flex;
 `
-
-const StyledStatusText = styled.p`
-height: 1rem;
-margin: auto;
-color: red;
-`
-
-
-
 
 interface Props {
 
@@ -163,21 +127,21 @@ export const GoogleContactsList: React.FunctionComponent<Props> = ({ }) => {
         });
     }
 
-    function listConnectionNames() {
+    /* function listConnectionNames() {
         window.gapi.client.people.people.connections.list({
             resourceName: 'people/me',
             pageSize: 10,
             personFields: 'names,emailAddresses,phoneNumbers,occupations,organizations',
         }).then(function (response: any) {
             var connections = response.result.connections;
-            /* console.log(connections) */
+           
 
 
         })
-    }
+    } */
 
 
-    const execute = () => {
+    /* const execute = () => {
 
         return window.gapi.client.people.people.connections.list({
             resourceName: "people/me",
@@ -193,7 +157,7 @@ export const GoogleContactsList: React.FunctionComponent<Props> = ({ }) => {
                 }
             );
 
-    };
+    }; */
 
     function setSigninStatus() {
 
@@ -215,10 +179,10 @@ export const GoogleContactsList: React.FunctionComponent<Props> = ({ }) => {
 
 
 
-    function revokeAccess() {
+    /* function revokeAccess() {
 
         googleAuth?.disconnect();
-    }
+    } */
 
     function updateSigninStatus() {
         setSigninStatus();
@@ -234,8 +198,8 @@ export const GoogleContactsList: React.FunctionComponent<Props> = ({ }) => {
             _gapi.load('client:auth2', () => {
                 (async () => {
                     _gapi.client.init({
-                        'apiKey': "AIzaSyBNa8_a2bGNGNatOyNFJZ-ZAZBWEHHGfiQ",
-                        'clientId': "646424163571-sret013veeg1sr5m72v8neuu4kh7ell6.apps.googleusercontent.com",
+                        'apiKey': process.env.REACT_APP_GOOGLE_API_KEY,
+                        'clientId': process.env.REACT_APP_GOOGLE_CLIENT_ID,
                         'scope': "https://www.googleapis.com/auth/contacts.readonly",
                         'discoveryDocs': ["https://www.googleapis.com/discovery/v1/apis/people/v1/rest"]
                     }).then(function () {
@@ -291,7 +255,7 @@ export const GoogleContactsList: React.FunctionComponent<Props> = ({ }) => {
     }
 
 
-    console.log("SignedIn", isSignedIn)
+    /* console.log("SignedIn", isSignedIn) */
 
 
 

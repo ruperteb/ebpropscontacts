@@ -1,31 +1,16 @@
 import React from "react"
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signInWithCredential } from "firebase/auth";
-import { collection, query, where, onSnapshot, getFirestore, DocumentData, addDoc, doc, updateDoc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebaseSetup"
 import { useAppSelector, useAppDispatch } from '../../../redux/hooks'
 import { navigationSlice } from '../../../redux/slices/navigationSlice';
 
 import {
     Button,
-    H5,
     Icon,
-    IconSize,
     IconName,
     InputGroup,
-    Intent,
-    Menu,
-    MenuItem,
-    Spinner,
-    Switch,
-    Tag,
-    Card,
-    Elevation,
-    Panel,
-    PanelProps,
-    PanelStack2
 } from "@blueprintjs/core";
 
-import { motion, AnimatePresence } from "framer-motion";
 
 import styled from 'styled-components'
 
@@ -33,8 +18,6 @@ import Select, { components } from 'react-select'
 import CreatableSelect from 'react-select/creatable';
 
 import { ToastContainer, toast } from 'react-toastify';
-
-
 
 
 const StyledPanelContainer = styled.div`
@@ -66,14 +49,6 @@ margin-bottom: 0;
 margin-top: 0;
 font-family:  "Segoe UI", sans-serif;
 
-
-`
-
-const StyledText = styled.p`
-display: flex;
-margin-left: auto;
-margin-right: auto;
-font-family:  "Segoe UI", sans-serif;
 
 `
 

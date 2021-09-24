@@ -15,7 +15,6 @@ import {
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-import Test from "./components/Test"
 import Login from "./components/Login"
 import Dashboard from "./components/Dashboard"
 

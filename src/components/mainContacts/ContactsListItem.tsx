@@ -1,7 +1,6 @@
 import React, { } from "react"
 import { createRef } from "react"
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signInWithCredential } from "firebase/auth";
-import { collection, query, where, onSnapshot, getFirestore, DocumentData, doc, getDoc, getDocs, deleteDoc, orderBy, updateDoc } from "firebase/firestore";
+import { collection, query, DocumentData, doc, getDocs, deleteDoc, orderBy, updateDoc } from "firebase/firestore";
 import { useAppSelector, useAppDispatch } from '../../redux/hooks'
 import { navigationSlice } from '../../redux/slices/navigationSlice';
 
@@ -9,19 +8,10 @@ import { db } from "../../firebaseSetup"
 
 import {
     Button,
-    H5,
     Icon,
-    IconSize,
-    InputGroup,
-    Intent,
     Menu,
     MenuItem,
-    Spinner,
-    Switch,
-    Tag,
-    Card,
-    Elevation,
-    Collapse,
+    
 } from "@blueprintjs/core";
 
 import { ContextMenu2, Popover2, Tooltip2 } from "@blueprintjs/popover2";
@@ -30,8 +20,6 @@ import { motion, AnimatePresence } from "framer-motion";
 
 
 import styled from 'styled-components'
-import { truncate } from "fs";
-import { resolve } from "dns";
 
 import FlipMove from 'react-flip-move';
 import AnimatedListItem from "./AnimatedListItem"
@@ -49,10 +37,6 @@ flex-direction: column;
 `
 
 interface StyledContactContainerProps {
-    contextMenuActive: boolean
-}
-
-interface StyledNotesRowProps {
     contextMenuActive: boolean
 }
 
@@ -129,20 +113,6 @@ grid-column-start: 8;
 
 const StyledContactButtonDiv = styled(StyledContactDetailsDiv)`
 grid-column-start: 9;
-
-`
-
-const StyledLeftDiv = styled.div`
-
-grid-column-start: 1;
-display: flex;
-
-`
-
-const StyledRightDiv = styled.div`
-
-grid-column-start: 3;
-display: flex;
 
 `
 
@@ -235,23 +205,6 @@ background: ${props => {
     }};
 `
 
-
-const StyledInputGroup = styled(InputGroup)`
-margin: 1rem;
-`
-
-const StyledButton = styled(Button)`
-    margin: auto;
-    /* margin-top: 1rem; */
-    display: flex;
-`
-
-const StyledStatusText = styled.p`
-height: 1rem;
-margin: auto;
-color: red;
-`
-
 const StyledNotesOuterContainer = styled(motion.div)`
 display: flex;
 /* flex-direction: column; */
@@ -336,19 +289,6 @@ font-family:  "Segoe UI", sans-serif;
 margin: auto;
 padding-left: 1rem;
 padding-right: 1rem;
-`
-
-const StyledNotesRow = styled.div <StyledNotesRowProps>`
-   display: grid;
-   grid-template-columns: 1fr 9fr; 
-   padding: 0.5rem;
-   border-bottom: 1px solid #c3d0d8;
-   transition: all 0.1s ease-in-out;
-   cursor: pointer;
-   background-color: ${props => props.contextMenuActive === true ? "#b3d2ec73 !important" : "aliceblue"};
-   :hover {
-       background-color: #b3d2ec73;
-   }
 `
 
 const StyledMenuItem = styled(MenuItem)`
@@ -488,28 +428,6 @@ export const ContactsListItem: React.FunctionComponent<Props> = ({ contact, inde
     }
 
     const [showDeletePopup, setShowDeletePopup] = React.useState(false)
-
-    const handleUpdateNote = (note: DocumentData) => {
-        dispatch(navigationSlice.actions.setSelectedContact(contact))
-        dispatch(navigationSlice.actions.setSelectedNote(note))
-        dispatch(navigationSlice.actions.setUpdateNotePanelDialogOpen(true))
-        handleContextMenuActive()
-
-    }
-
-    const [showDeleteNotePopup, setShowDeleteNotePopup] = React.useState(false)
-
-
-
-    const handleInteraction = (nextOpenState: boolean) => {
-        let updateOpen = true
-        updateOpen = contactsUpdatePanelDialogOpen
-        console.log(contactsUpdatePanelDialogOpen)
-        if (updateOpen !== true) {
-            setShowDeletePopup(nextOpenState);
-        }
-
-    }
 
     const handleAddNote = () => {
         dispatch(navigationSlice.actions.setSelectedContact(contact))

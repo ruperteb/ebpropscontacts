@@ -1,29 +1,11 @@
 import React from "react"
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signInWithCredential } from "firebase/auth";
 
-import { useAppSelector, useAppDispatch } from '../../../redux/hooks'
+import { useAppDispatch } from '../../../redux/hooks'
 import { navigationSlice } from '../../../redux/slices/navigationSlice';
 
 import {
-    Button,
-    H5,
     Icon,
-    IconSize,
-    InputGroup,
-    Intent,
-    Menu,
-    MenuItem,
-    Spinner,
-    Switch,
-    Tag,
-    Card,
-    Elevation,
-    Panel,
-    PanelProps,
-    PanelStack2
 } from "@blueprintjs/core";
-
-import { motion, AnimatePresence } from "framer-motion";
 
 import styled from 'styled-components'
 
@@ -58,14 +40,6 @@ padding-top: 0.5rem;
 margin-bottom: 0;
 margin-top: 0;
 font-family:  "Segoe UI", sans-serif;
-`
-
-const StyledButton = styled(Button)`
-    margin: auto;
-    /* margin-top: 1rem; */
-    display: flex;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
 `
 
 const StyledIcon = styled(Icon)`

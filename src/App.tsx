@@ -1,9 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
-
-
-import { getFirestore } from 'firebase/firestore';
-import { useFirestoreDocData, useFirestore, useFirebaseApp, FirestoreProvider } from 'reactfire';
 
 import {
   BrowserRouter as Router,
@@ -17,8 +12,6 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import Login from "./components/Login"
 import Dashboard from "./components/Dashboard"
-
-import { loadGoogleScript } from './utils/googleApiScript';
 
 import './App.css';
 

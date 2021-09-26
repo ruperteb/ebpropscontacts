@@ -11,7 +11,7 @@ import {
     Icon,
     Menu,
     MenuItem,
-    
+
 } from "@blueprintjs/core";
 
 import { ContextMenu2, Popover2, Tooltip2 } from "@blueprintjs/popover2";
@@ -245,19 +245,21 @@ padding-bottom: 0.5rem;
 const StyledNotesHeading = styled.h2`
 font-family:  "Segoe UI", sans-serif;
 font-size: 1rem;
-/* width: 100%; */
-/* margin-top: 0;
-margin-bottom: 0; */
-/* padding-bottom: 0.5rem; */
 padding-left: 0.5rem;
-/* border-bottom: 1px solid #c3d0d8; */
+height: fit-content;
+margin-top: auto;
+margin-bottom: auto;
+
 `
 
 const StyledAdditionalDetailsContainer = styled.div`
 display: flex;
-flex-direction: column;
+flex-direction: row;
 flex-wrap: wrap;
 margin: auto;
+border: 1px solid #d9e3e8;
+    padding: 0.5rem;
+    background-color: #eef6f8;
 `
 
 const StyledAdditionalDetailsHeading = styled.div`
@@ -266,10 +268,8 @@ margin: auto;
 font-family:  "Segoe UI", sans-serif;
 font-size: 1rem;
 font-weight: 500;
-/* margin-top: 0;
-margin-bottom: 0; */
-padding-bottom: 0.5rem;
-/* padding-left: 0.5rem; */
+/* padding-bottom: 0.5rem; */
+padding-right: 1rem;
 `
 
 const StyledAdditionalDetailsDiv = styled.div`
@@ -618,8 +618,8 @@ export const ContactsListItem: React.FunctionComponent<Props> = ({ contact, inde
                                     <StyledNotesHeading>
                                         <StyledPopoverButton /* large={true} */ icon="add" intent="primary" onClick={handleAddNote} text="Add Note" />
                                     </StyledNotesHeading>
-                                    <StyledAdditionalDetailsContainer>
-                                        {contact.office !== "" || contact.address !== "" ? <><StyledAdditionalDetailsHeading>Additonal Details</StyledAdditionalDetailsHeading></> : <></>}
+                                    {contact.office !== "" || contact.address !== "" ? <><StyledAdditionalDetailsContainer>
+                                        <StyledAdditionalDetailsHeading>Additonal Details:</StyledAdditionalDetailsHeading>
                                         <StyledAdditionalDetailsDiv>
                                             {contact.office !== "" ? <><StyledIcon icon="phone" intent="primary" size={16} />
                                                 <StyledAdditionalDetailsText>
@@ -637,7 +637,7 @@ export const ContactsListItem: React.FunctionComponent<Props> = ({ contact, inde
                                         </StyledAdditionalDetailsDiv>
 
 
-                                    </StyledAdditionalDetailsContainer>
+                                    </StyledAdditionalDetailsContainer></> : <></>}
                                 </StyledNotesHeader>
 
                                 <StyledNotesContainer>

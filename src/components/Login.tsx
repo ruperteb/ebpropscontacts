@@ -1,5 +1,5 @@
 import React from "react"
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signInWithCredential } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 
 import {
@@ -67,7 +67,7 @@ export const Login: React.FunctionComponent<Props> = ({ }) => {
 
     const [status, setStatus] = React.useState("")
 
-    const [credential, setCredential] = React.useState<string>()
+    /* const [credential, setCredential] = React.useState<string>() */
 
     /* console.log(credential)
 

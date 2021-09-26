@@ -8,7 +8,6 @@ import { navigationSlice } from '../../redux/slices/navigationSlice';
 import {
     Button,
     InputGroup,
-    Card,
 } from "@blueprintjs/core";
 
 import styled from 'styled-components'

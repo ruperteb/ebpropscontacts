@@ -1,7 +1,5 @@
 import React from "react"
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signInWithCredential } from "firebase/auth";
-
-import { useAppDispatch } from '../redux/hooks'
+import { getAuth, signOut } from "firebase/auth";
 
 import {
     Button,
@@ -74,9 +72,7 @@ export const Header: React.FunctionComponent<Props> = ({ }) => {
 
     const auth = getAuth();
     
-    console.log(auth.currentUser?.displayName)
-
-    const dispatch = useAppDispatch()
+    /* console.log(auth.currentUser?.displayName) */
 
     return (
         <StyledNavigationContainer>

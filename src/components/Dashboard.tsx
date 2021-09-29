@@ -19,6 +19,8 @@ import styled from 'styled-components'
 import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { useIsSignedIn } from "../utils/msSignedIn";
+
 const StyledToastContainer = styled(ToastContainer)`
 
     /* bottom: 8em !important; */
@@ -35,9 +37,13 @@ interface Props {
 
 export const Dashboard: React.FunctionComponent<Props> = ({ }) => {
 
+    const [isSignedIn] = useIsSignedIn();
+
+    console.log(isSignedIn)
+
     const dispatch = useAppDispatch()
 
-    const q = query(collection(db, "beauhaus"), orderBy("displayName_lowerCase", "asc"), orderBy("company_lowerCase", "asc"));
+    const q = query(collection(db, "contacts"), orderBy("displayName_lowerCase", "asc"), orderBy("company_lowerCase", "asc"));
 
     React.useEffect(() => {
         const unsubscribe = onSnapshot(q, (querySnapshot) => {

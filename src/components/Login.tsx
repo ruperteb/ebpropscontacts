@@ -1,5 +1,5 @@
 import React from "react"
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 
 import {
@@ -73,6 +73,11 @@ export const Login: React.FunctionComponent<Props> = ({ }) => {
 
     console.log(email, password) */
 
+    
+
+
+
+
     const handleSignInWithEmailAndPassword = () => {
         setStatus("")
         signInWithEmailAndPassword(auth, email, password)
@@ -80,7 +85,8 @@ export const Login: React.FunctionComponent<Props> = ({ }) => {
                 /* setStatus("Success") */
                 // Signed in 
                 const user = userCredential.user;
-                
+
+
                 // ...
             })
             .catch((error) => {
@@ -96,7 +102,7 @@ export const Login: React.FunctionComponent<Props> = ({ }) => {
             });
     }
 
-   
+
 
 
     const handleSetEmail = (e: React.ChangeEvent<HTMLInputElement>) => {

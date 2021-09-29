@@ -135,10 +135,10 @@ export const AddNotePanel: React.FunctionComponent<Props> = ({ }) => {
 
     });
 
-    const docRef = doc(db, "beauhaus", selectedContact.id);
+    const docRef = doc(db, "contacts", selectedContact.id);
 
     const submitNote = async () => {
-        await addDoc(collection(db, "beauhaus/" + selectedContact.id + "/notes"), {
+        await addDoc(collection(db, "contacts/" + selectedContact.id + "/notes"), {
             date: serverTimestamp(),
             note: noteDetails.note,
 

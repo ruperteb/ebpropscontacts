@@ -12,9 +12,9 @@ import {
 
 import styled from 'styled-components'
 
-import GoogleContact from "./GoogleContact"
+import MicrosoftContact from "./MicrosoftContact"
 
-
+import { PeoplePicker } from '@microsoft/mgt-react';
 
 const StyledLoginContainer = styled.div`
 display: flex;
@@ -257,15 +257,18 @@ export const GoogleContactsList: React.FunctionComponent<Props> = ({ }) => {
 
 
     /* console.log("SignedIn", isSignedIn) */
+const handleSelection = (e:any) => {
+console.log(e.detail[0])
 
+}
 
 
     return (
         <StyledLoginContainer>
 
 
-            <StyledTitleDiv>
-                {/* <StyledH2>Contact List</StyledH2> */}
+            {/* <StyledTitleDiv>
+               
                 <StyledGoogleSignin id="google-signin" onClick={handleAuthClick}></StyledGoogleSignin>
             </StyledTitleDiv>
 
@@ -274,22 +277,27 @@ export const GoogleContactsList: React.FunctionComponent<Props> = ({ }) => {
 
                     large={true}
                     placeholder={isSignedIn ? "Search" : "Must Sign In to proceed"}
-                    /* rightElement={lockButton} */
+                   
                     disabled={!isSignedIn}
                     leftIcon={"search"}
-                    /* small={small} */
+                  
                     type={"search"}
                     value={search}
                     onChange={handleSetSearch}
                 />
 
 
-                <StyledButton large={true} onClick={searchNames} rightIcon="arrow-right" intent="primary" /* text="Submit" */></StyledButton>
+                <StyledButton large={true} onClick={searchNames} rightIcon="arrow-right" intent="primary" ></StyledButton>
 
-            </StyledSearchDiv>
+            </StyledSearchDiv> */}
+
+            <PeoplePicker
+            selectionMode="single"
+            selectionChanged={(e)=>handleSelection(e)}
+            ></PeoplePicker>
 
             {searchResults?.map((contact, index: number) => {
-                return <GoogleContact contact={contact} key={index}></GoogleContact>
+                return <MicrosoftContact contact={contact} key={index}></MicrosoftContact>
 
             })}
 

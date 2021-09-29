@@ -114,6 +114,9 @@ const Placeholder = (props: any) => {
     if (props.selectProps.placeholder === "Region") {
         placeholder = "Region"
     }
+    if (props.selectProps.placeholder === "Type") {
+        placeholder = "Type"
+    }
     return (
 
         <components.Placeholder  {...props}>
@@ -146,6 +149,9 @@ const ValueContainer = ({ children, ...props }) => {
     if (props.selectProps.placeholder === "Region") {
         icon = "globe"
     }
+    if (props.selectProps.placeholder === "Type") {
+        icon = "tag"
+    }
     return (
         //@ts-ignore
         <components.ValueContainer {...props}>
@@ -176,6 +182,7 @@ export const AddManualPanel: React.FunctionComponent<Props> = ({ }) => {
         email: string,
         industry: string[],
         region: string[],
+        type: string[],
     }
 
     const [contactDetails, setContactDetails] = React.useState<ContactDetails>({
@@ -187,7 +194,8 @@ export const AddManualPanel: React.FunctionComponent<Props> = ({ }) => {
         address: selectedContact.address,
         email: selectedContact.email,
         industry: selectedContact.industry,
-        region: selectedContact.region
+        region: selectedContact.region,
+        type: selectedContact.type
     })
 
     const dispatch = useAppDispatch()
@@ -226,6 +234,22 @@ export const AddManualPanel: React.FunctionComponent<Props> = ({ }) => {
     /* var distinctRegions = Array.from(new Set(contactsData.map((contact: any) => contact.region))) */
     var formattedRegions = distinctRegions.map((region) => {
         return { value: region, label: region }
+    })
+
+    var contactTypeData = contactsData.map((contact: any) => { return contact.type })
+
+    let combinedContactTypeData: any = []
+
+    contactTypeData.map((contact) => {
+        contact.map((type:any) => {
+            combinedContactTypeData = [...combinedContactTypeData, type]
+        })
+    })
+    
+    var distinctTypes:string[] = Array.from(new Set(combinedContactTypeData.map((type: string) => { return type })))
+    
+    var formattedTypes = distinctTypes.map((type) => {
+        return { value: type, label: type }
     })
 
     const customSelectStyles = {
@@ -270,7 +294,7 @@ export const AddManualPanel: React.FunctionComponent<Props> = ({ }) => {
         }),
         menuList: (provided: any, state: any) => ({
             ...provided,
-            maxHeight: "175px"
+            maxHeight: "125px"
         }),
         /* singleValue: (provided:any, state:any) => {
           const opacity = state.isDisabled ? 0.5 : 1;
@@ -357,6 +381,44 @@ export const AddManualPanel: React.FunctionComponent<Props> = ({ }) => {
             setContactDetails({ ...contactDetails, region: tempRegionFilter })
         }
 
+        const onSelectType =
+        (value: any, actionType: any) => {
+            var tempTypeFilter = contactDetails.type
+            if (actionType.action === "select-option") {
+                var valuesArray = value.map((item: any) => {
+                    return item.value
+                })
+                valuesArray.map((item: any) => {
+                    var index = contactDetails.type.findIndex(x => x === item);
+                    if (index === -1) {
+                        tempTypeFilter = [...tempTypeFilter, item]
+                    }
+                })
+            }
+            if (actionType.action === "create-option") {
+                var valuesArray = value.map((item: any) => {
+                    return item.value
+                })
+                valuesArray.map((item: any) => {
+                    var index = contactDetails.type.findIndex(x => x === item);
+                    if (index === -1) {
+                        tempTypeFilter = [...tempTypeFilter, item]
+                    }
+                })
+            }
+            if (actionType.action === "remove-value") {
+                var valuesArray = value.map((item: any) => {
+                    return item.value
+                })
+                tempTypeFilter = valuesArray
+            }
+            if (actionType.action === "clear") {
+                tempTypeFilter = []
+            }
+
+            setContactDetails({ ...contactDetails, type: tempTypeFilter })
+        }
+
     const handleToastClose = () => {
         dispatch(navigationSlice.actions.setContactsUpdatePanelDialogOpen(false))
 
@@ -384,7 +446,7 @@ export const AddManualPanel: React.FunctionComponent<Props> = ({ }) => {
 
     });
 
-    const docRef = doc(db, "beauhaus", selectedContact.id);
+    const docRef = doc(db, "contacts", selectedContact.id);
 
     const submitContact = async () => {
         await setDoc(docRef, {
@@ -399,6 +461,7 @@ export const AddManualPanel: React.FunctionComponent<Props> = ({ }) => {
             email: contactDetails.email,
             industry: contactDetails.industry,
             region: contactDetails.region,
+            type: contactDetails.type,
         }, { merge: true })
             .then(() => {
 
@@ -521,6 +584,21 @@ export const AddManualPanel: React.FunctionComponent<Props> = ({ }) => {
                 options={formattedRegions}
                 onChange={onSelectRegion}
                 value={contactDetails.region.map((region) => { return { value: region, label: region } })}
+            />
+            <CreatableSelect
+                /* ref={suburbRef} */
+                components={{ Placeholder, Input, ValueContainer }}
+
+                isClearable
+                key="type"
+                isMulti
+                placeholder="Type"
+                styles={customSelectStyles}
+                //@ts-ignore
+                menuPortalTarget={document.querySelector(".bp3-portal")}
+                options={formattedTypes}
+                onChange={onSelectType}
+                value={contactDetails.type.map((type) => { return { value: type, label: type } })}
             />
 
             <StyledButton large={true} intent="success" onClick={() => submitContact()}>Submit</StyledButton>

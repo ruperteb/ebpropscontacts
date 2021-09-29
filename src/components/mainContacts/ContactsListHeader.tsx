@@ -8,8 +8,8 @@ import styled from 'styled-components'
 
 const StyledContactContainer = styled.div`
 display: grid;
-grid-template-columns: calc(1rem + 20px + 15%) 1fr 1fr 1fr 1.5fr 1fr 1fr 0.5fr;
-grid-template-areas: "name position company phone email industry region button";
+grid-template-columns: calc(1rem + 20px + 15%) 1fr 1fr 1fr 1.5fr 1fr 1fr 1fr;
+grid-template-areas: "name position company phone email industry region type";
 /* height: 100px; */
 border-bottom: 1px solid #c3d0d8;
 padding: 0.5rem;
@@ -62,7 +62,7 @@ grid-column-start: 7;
 
 `
 
-const StyledContactButtonDiv = styled(StyledContactDetailsDiv)`
+const StyledContactTypeDiv = styled(StyledContactDetailsDiv)`
 grid-column-start: 8;
 
 `
@@ -138,9 +138,12 @@ export const ContactsListHeader: React.FunctionComponent<Props> = ({ }) => {
                     Region
                 </StyledDetailsText>
             </StyledContactRegionDiv>
-            <StyledContactButtonDiv>
-
-            </StyledContactButtonDiv>
+            <StyledContactTypeDiv>
+                <StyledIcon icon="tag" intent="primary" size={iconSize} />
+                <StyledDetailsText>
+                    Type
+                </StyledDetailsText>
+            </StyledContactTypeDiv>
 
         </StyledContactContainer>
 

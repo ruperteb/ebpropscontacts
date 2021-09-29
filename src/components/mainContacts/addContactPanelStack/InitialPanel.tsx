@@ -11,6 +11,7 @@ import {
 
 import styled from 'styled-components'
 
+import { PeoplePicker } from '@microsoft/mgt-react';
 
 
 
@@ -74,6 +75,14 @@ align-items: center;
     margin-left: 0.5rem;
 `
 
+const StyledPeoplePicker = styled(PeoplePicker)`
+padding: 1rem;
+    display: block;
+    padding-left: 2rem;
+    padding-right: 2rem;
+
+
+`
 
 
 
@@ -92,6 +101,38 @@ export const InitialPanel: React.FunctionComponent<Props> = ({ }) => {
 
     }
 
+    interface MSPhone {
+        type: string
+        number: string
+    }
+
+    interface MSEmail {
+        address: string
+        relevanceScore: number
+        selectionLikelihood: string
+    }
+
+    interface MSContact {
+        displayName: string
+        companyName: string
+        jobTitle: string
+        phones: MSPhone[]
+        scoredEmailAddresses: MSEmail[]
+    }
+
+    const handleSelection = (e: any) => {
+
+        dispatch(navigationSlice.actions.setMicrosoftContactImportDetails({
+            displayName: e.detail[0].displayName,
+            companyName: e.detail[0].companyName,
+            jobTitle: e.detail[0].jobTitle,
+            phones: e.detail[0].phones,
+            scoredEmailAddresses: e.detail[0].scoredEmailAddresses,
+        }))
+
+        handleClick("addmicrosoft", 1)
+    }
+
     return (
         <StyledPanelContainer>
             <StyledTitleDiv>
@@ -105,9 +146,13 @@ export const InitialPanel: React.FunctionComponent<Props> = ({ }) => {
             </StyledText>
             <StyledButton large={true} intent="success" onClick={() => handleClick("addmanual", 1)}>Manual Contact</StyledButton>
             <StyledText style={{ marginTop: "1rem" }}>
-                Or import a contact details from Google Contacts:
+                Or import a contact details from MS Exchange:
             </StyledText>
-            <StyledButton large={true} intent="success" onClick={() => handleClick("selectgoogle", 1)}>Google Contact</StyledButton>
+            <StyledPeoplePicker
+                id="people-picker"
+                selectionMode="single"
+                selectionChanged={(e) => handleSelection(e)}
+            ></StyledPeoplePicker>
         </StyledPanelContainer>
 
     )

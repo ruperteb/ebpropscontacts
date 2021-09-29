@@ -73,18 +73,12 @@ export const UpdatePanelStack: React.FunctionComponent<Props> = ({ }) => {
     };
 
     const panelSizeVariants = {
-        /* initial: {
-            height: "300px",
-            width: "400px"
-        }, */
+        
         updatemanual: {
-            height: "650px",
+            height: "700px",
             width: "400px"
         },
-        /* addgoogle: {
-            height: "800px",
-            width: "400px"
-        } */
+       
     }
 
     const spring = {

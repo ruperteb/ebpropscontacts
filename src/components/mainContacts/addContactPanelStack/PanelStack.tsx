@@ -15,6 +15,8 @@ import InitialPanel from "./InitialPanel";
 import AddManualPanel from "./AddManualPanel";
 import SelectGooglePanel from "./SelectGooglePanel";
 import AddGooglePanel from "./AddGooglePanel";
+import SelectMicrosoftPanel from "./SelectMicrosoftPanel";
+import AddMicrosoftPanel from "./AddMicrosoftPanel";
 
 interface StyledStackContainerProps {
     contactsPanelStackPage: string
@@ -86,7 +88,7 @@ export const PanelStack: React.FunctionComponent<Props> = ({ }) => {
             width: "400px"
         },
         addmanual: {
-            height: "650px",
+            height: "700px",
             width: "400px"
         },
         selectgoogle: {
@@ -95,6 +97,14 @@ export const PanelStack: React.FunctionComponent<Props> = ({ }) => {
         },
         addgoogle: {
             height: "650px",
+            width: "400px"
+        },
+        selectmicrosoft: {
+            height: "650px",
+            width: "450px"
+        },
+        addmicrosoft: {
+            height: "700px",
             width: "400px"
         },
     }
@@ -143,6 +153,10 @@ export const PanelStack: React.FunctionComponent<Props> = ({ }) => {
                 return <SelectGooglePanel />
             case "addgoogle":
                 return <AddGooglePanel />
+            case "selectmicrosoft":
+                return <SelectMicrosoftPanel />
+            case "addmicrosoft":
+                return <AddMicrosoftPanel />
             default:
                 return <InitialPanel />
         }
@@ -155,23 +169,23 @@ export const PanelStack: React.FunctionComponent<Props> = ({ }) => {
     const handleClose = () => {
         dispatch(navigationSlice.actions.setContactsPanelDialogOpen(false))
         dispatch(navigationSlice.actions.setContactsPanelStackPage("initial"))
-        
+
     }
 
     const disableScroll = () => {
-        
-       var scrollTop = window.scrollY
-            window.onscroll = () => {
-                window.scrollTo(0, scrollTop);
-            };
+
+        var scrollTop = window.scrollY
+        window.onscroll = () => {
+            window.scrollTo(0, scrollTop);
+        };
     }
 
     const enableScroll = () => {
-        window.onscroll = function() {};
+        window.onscroll = function () { };
     }
 
     React.useEffect(() => {
-        if(contactsPanelDialogOpen===true) {
+        if (contactsPanelDialogOpen === true) {
             disableScroll()
         } else {
             enableScroll()

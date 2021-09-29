@@ -136,7 +136,7 @@ export const UpdateNotePanel: React.FunctionComponent<Props> = ({ }) => {
 
     });
 
-    const docRef = doc(db, "beauhaus/" + selectedContact.id + "/notes/" + selectedNote.id,);
+    const docRef = doc(db, "contacts/" + selectedContact.id + "/notes/" + selectedNote.id,);
 
     const submitNote = async () => {
         await updateDoc(docRef, {

@@ -42,8 +42,8 @@ interface StyledContactContainerProps {
 
 const StyledContactContainer = styled(motion.div) <StyledContactContainerProps>`
 display: grid;
-grid-template-columns: calc(1rem + 20px) 15% 1fr 1fr 1fr 1.5fr 1fr 1fr 0.5fr;
-grid-template-areas: "priority name position company phone email industry region button";
+grid-template-columns: calc(1rem + 20px) 15% 1fr 1fr 1fr 1.5fr 1fr 1fr 1fr;
+grid-template-areas: "priority name position company phone email industry region type";
 /* height: 100px; */
 border-bottom: 1px solid #c3d0d8;
 padding: 0.5rem;
@@ -111,7 +111,7 @@ grid-column-start: 8;
 
 `
 
-const StyledContactButtonDiv = styled(StyledContactDetailsDiv)`
+const StyledContactTypeDiv = styled(StyledContactDetailsDiv)`
 grid-column-start: 9;
 
 `
@@ -357,7 +357,7 @@ export const ContactsListItem: React.FunctionComponent<Props> = ({ contact, inde
 
     const [contactNotes, setContactNotes] = React.useState<DocumentData[]>([])
 
-    const q = query(collection(db, "beauhaus/" + contact.id + "/notes"), orderBy("date", "desc")/* , orderBy("company", "desc") */);
+    const q = query(collection(db, "contacts/" + contact.id + "/notes"), orderBy("date", "desc")/* , orderBy("company", "desc") */);
 
     const getNotes = async () => {
         const querySnapshot = await getDocs(q);
@@ -379,12 +379,12 @@ export const ContactsListItem: React.FunctionComponent<Props> = ({ contact, inde
     }, [selectedContactRefresh])
 
     const deleteContact = async () => {
-        const querySnapshot = await getDocs(collection(db, "beauhaus/" + contact.id + "/notes"));
+        const querySnapshot = await getDocs(collection(db, "contacts/" + contact.id + "/notes"));
         /* let notes: DocumentData[] = [] */
         querySnapshot.docs.map(async (doc) => {
             await deleteDoc(doc.ref)
         })
-        await deleteDoc(doc(db, "beauhaus", contact.id));
+        await deleteDoc(doc(db, "contacts", contact.id));
         setShowDeletePopup(false)
 
     }
@@ -436,7 +436,7 @@ export const ContactsListItem: React.FunctionComponent<Props> = ({ contact, inde
 
     }
 
-    const docRef = doc(db, "beauhaus", contact.id);
+    const docRef = doc(db, "contacts", contact.id);
 
     const handlePriorityClick = async () => {
         switch (contact.priority) {
@@ -589,9 +589,30 @@ export const ContactsListItem: React.FunctionComponent<Props> = ({ contact, inde
                                 </StyledDetailsText>
                             </StyledTooltip2>
                         </StyledContactRegionDiv>
-                        <StyledContactButtonDiv>
-
-                        </StyledContactButtonDiv>
+                        <StyledContactTypeDiv onClick={handleContactClick}>
+                            <StyledTooltip2
+                                /* className={Classes.TOOLTIP2_INDICATOR} */
+                                placement="right"
+                                content={<span>{contact.type.map((type: string, index: number) => {
+                                    if (index === 0) {
+                                        return type
+                                    } else {
+                                        return `, ${type}`
+                                    }
+                                })}</span>}
+                            /* minimal={true} */
+                            >
+                                <StyledDetailsText>
+                                    {contact.type.map((type: string, index: number) => {
+                                        if (index === 0) {
+                                            return type
+                                        } else {
+                                            return `, ${type}`
+                                        }
+                                    })}
+                                </StyledDetailsText>
+                            </StyledTooltip2>
+                        </StyledContactTypeDiv>
 
 
                     </StyledContactContainer>

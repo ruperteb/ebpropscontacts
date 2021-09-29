@@ -1,5 +1,5 @@
 import React from "react"
-import { collection, addDoc,  } from "firebase/firestore";
+import { collection, addDoc, } from "firebase/firestore";
 import { db } from "../../../firebaseSetup"
 import { useAppSelector, useAppDispatch } from '../../../redux/hooks'
 import { navigationSlice } from '../../../redux/slices/navigationSlice';
@@ -109,11 +109,23 @@ const StyledToastButton = styled(Button)`
 
 const Placeholder = (props: any) => {
     var placeholder = ""
+    if (props.selectProps.placeholder === "Email") {
+        placeholder = "Email"
+    }
+    if (props.selectProps.placeholder === "Mobile") {
+        placeholder = "Mobile No"
+    }
+    if (props.selectProps.placeholder === "Office") {
+        placeholder = "Office No"
+    }
     if (props.selectProps.placeholder === "Industry") {
         placeholder = "Industry"
     }
     if (props.selectProps.placeholder === "Region") {
         placeholder = "Region"
+    }
+    if (props.selectProps.placeholder === "Type") {
+        placeholder = "Type"
     }
     return (
 
@@ -141,11 +153,23 @@ const Input = (props: any) => {
 //@ts-ignore
 const ValueContainer = ({ children, ...props }) => {
     let icon: IconName = "office"
+    if (props.selectProps.placeholder === "Email") {
+        icon = "envelope"
+    }
+    if (props.selectProps.placeholder === "Mobile") {
+        icon = "mobile-phone"
+    }
+    if (props.selectProps.placeholder === "Office") {
+        icon = "phone"
+    }
     if (props.selectProps.placeholder === "Industry") {
         icon = "office"
     }
     if (props.selectProps.placeholder === "Region") {
         icon = "globe"
+    }
+    if (props.selectProps.placeholder === "Type") {
+        icon = "tag"
     }
     return (
         //@ts-ignore
@@ -163,9 +187,29 @@ interface Props {
 
 }
 
-export const AddGooglePanel: React.FunctionComponent<Props> = ({ }) => {
+export const AddMicrosoftPanel: React.FunctionComponent<Props> = ({ }) => {
 
     const googleContactsImportDetails = useAppSelector((state) => state.navigation.googleContactsImportDetails)
+
+    const microsoftContactImportDetails = useAppSelector((state) => state.navigation.microsoftContactImportDetails)
+
+    var phoneNumbers: any = []
+
+    microsoftContactImportDetails?.phones?.map((phone) => {
+        phoneNumbers = [...phoneNumbers, { value: phone.number, label: phone.number }]
+    })
+
+    var emailAddresses: any = []
+
+    /* contact?.person?.emailAddresses?.map((email) => {
+        emailAddresses = [...emailAddresses, { type: email.type, email: email.value }]
+    }) */
+
+    microsoftContactImportDetails?.scoredEmailAddresses?.map((email) => {
+        emailAddresses = [...emailAddresses, { value: email.address, label: email.address }]
+    })
+
+    console.log(microsoftContactImportDetails)
 
     interface ContactDetails {
         name?: string,
@@ -176,19 +220,54 @@ export const AddGooglePanel: React.FunctionComponent<Props> = ({ }) => {
         office?: string,
         email?: string,
         industry: string[],
-        region: string[]
+        region: string[],
+        type: string[]
+    }
+
+    const getMobile = () => {
+        var mobile = ""
+        microsoftContactImportDetails.phones?.filter((phone) => {
+            if (phone.type === "mobile") {
+                mobile = phone.number
+            }
+        })
+        if (mobile) {
+            return mobile
+        } else return ""
+
+    }
+
+    const getOffice = () => {
+        var office = ""
+        microsoftContactImportDetails.phones?.filter((phone) => {
+            if (phone.type === "office") {
+                office = phone.number
+            }
+        })
+        if (office) {
+            return office
+        } else return ""
+
+    }
+
+    const getEmail = () => {
+        if (microsoftContactImportDetails.scoredEmailAddresses) {
+            return microsoftContactImportDetails.scoredEmailAddresses[0].address
+        }
+
     }
 
     const [contactDetails, setContactDetails] = React.useState<ContactDetails>({
-        name: googleContactsImportDetails.name,
-        position: googleContactsImportDetails.position,
-        company: googleContactsImportDetails.company,
+        name: microsoftContactImportDetails.displayName,
+        position: microsoftContactImportDetails.jobTitle,
+        company: microsoftContactImportDetails.companyName,
         address: "",
-        mobile: googleContactsImportDetails.mobile,
-        office: googleContactsImportDetails.office,
-        email: googleContactsImportDetails.email,
+        mobile: getMobile(),
+        office: getOffice(),
+        email: getEmail(),
         industry: [],
-        region: []
+        region: [],
+        type: []
     })
 
     const dispatch = useAppDispatch()
@@ -197,18 +276,18 @@ export const AddGooglePanel: React.FunctionComponent<Props> = ({ }) => {
     const contactsData = useAppSelector((state) => state.navigation.contactsData)
 
     var contactIndustryData = contactsData.map((contact: any) => { return contact.industry })
-    
+
     let combinedContactIndustryData: any = []
 
     contactIndustryData.map((contact) => {
-        contact.map((industry:any) => {
+        contact.map((industry: any) => {
             combinedContactIndustryData = [...combinedContactIndustryData, industry]
         })
     })
-    
-    var distinctIndustries:string[] = Array.from(new Set(combinedContactIndustryData.map((industry: string) => { return industry })))
-   
-    var formattedIndustries  = distinctIndustries.map((industry) => {
+
+    var distinctIndustries: string[] = Array.from(new Set(combinedContactIndustryData.map((industry: string) => { return industry })))
+
+    var formattedIndustries = distinctIndustries.map((industry) => {
         return { value: industry, label: industry }
     })
 
@@ -217,16 +296,34 @@ export const AddGooglePanel: React.FunctionComponent<Props> = ({ }) => {
     let combinedContactRegionData: any = []
 
     contactRegionData.map((contact) => {
-        contact.map((region:any) => {
+        contact.map((region: any) => {
             combinedContactRegionData = [...combinedContactRegionData, region]
         })
     })
-    
-    var distinctRegions:string[] = Array.from(new Set(combinedContactRegionData.map((region: string) => { return region })))
-    
+
+    var distinctRegions: string[] = Array.from(new Set(combinedContactRegionData.map((region: string) => { return region })))
+
     var formattedRegions = distinctRegions.map((region) => {
         return { value: region, label: region }
     })
+
+    var contactTypeData = contactsData.map((contact: any) => { return contact.type })
+
+    let combinedContactTypeData: any = []
+
+    contactTypeData.map((contact) => {
+        contact.map((type:any) => {
+            combinedContactTypeData = [...combinedContactTypeData, type]
+        })
+    })
+    
+    var distinctTypes:string[] = Array.from(new Set(combinedContactTypeData.map((type: string) => { return type })))
+    
+    var formattedTypes = distinctTypes.map((type) => {
+        return { value: type, label: type }
+    })
+
+    
 
     const customSelectStyles = {
         option: (provided: any, state: any) => ({
@@ -270,7 +367,7 @@ export const AddGooglePanel: React.FunctionComponent<Props> = ({ }) => {
         }),
         menuList: (provided: any, state: any) => ({
             ...provided,
-            maxHeight: "175px"
+            maxHeight: "125px"
         }),
         /* singleValue: (provided:any, state:any) => {
           const opacity = state.isDisabled ? 0.5 : 1;
@@ -279,6 +376,45 @@ export const AddGooglePanel: React.FunctionComponent<Props> = ({ }) => {
           return { ...provided, opacity, transition };
         } */
     }
+
+    const onSelectEmail =
+        (value: any, actionType: any) => {
+            if (actionType.action === "select-option") {
+                setContactDetails({ ...contactDetails, email: value.value })
+            }
+            if (actionType.action === "create-option") {
+                setContactDetails({ ...contactDetails, email: value.value })
+            }
+            if (actionType.action === "clear") {
+                setContactDetails({ ...contactDetails, email: "" })
+            }
+        }
+
+    const onSelectMobile =
+        (value: any, actionType: any) => {
+            if (actionType.action === "select-option") {
+                setContactDetails({ ...contactDetails, mobile: value.value })
+            }
+            if (actionType.action === "create-option") {
+                setContactDetails({ ...contactDetails, mobile: value.value })
+            }
+            if (actionType.action === "clear") {
+                setContactDetails({ ...contactDetails, mobile: "" })
+            }
+        }
+
+    const onSelectOffice =
+        (value: any, actionType: any) => {
+            if (actionType.action === "select-option") {
+                setContactDetails({ ...contactDetails, office: value.value })
+            }
+            if (actionType.action === "create-option") {
+                setContactDetails({ ...contactDetails, office: value.value })
+            }
+            if (actionType.action === "clear") {
+                setContactDetails({ ...contactDetails, office: "" })
+            }
+        }
 
     const onSelectIndustry =
         (value: any, actionType: any) => {
@@ -319,7 +455,7 @@ export const AddGooglePanel: React.FunctionComponent<Props> = ({ }) => {
             setContactDetails({ ...contactDetails, industry: tempIndustryFilter })
         }
 
-        const onSelectRegion =
+    const onSelectRegion =
         (value: any, actionType: any) => {
             var tempRegionFilter = contactDetails.region
             if (actionType.action === "select-option") {
@@ -357,11 +493,49 @@ export const AddGooglePanel: React.FunctionComponent<Props> = ({ }) => {
             setContactDetails({ ...contactDetails, region: tempRegionFilter })
         }
 
-        const handleToastClose = () => {
-            dispatch(navigationSlice.actions.setContactsUpdatePanelDialogOpen(false))
-            
+        const onSelectType =
+        (value: any, actionType: any) => {
+            var tempTypeFilter = contactDetails.type
+            if (actionType.action === "select-option") {
+                var valuesArray = value.map((item: any) => {
+                    return item.value
+                })
+                valuesArray.map((item: any) => {
+                    var index = contactDetails.type.findIndex(x => x === item);
+                    if (index === -1) {
+                        tempTypeFilter = [...tempTypeFilter, item]
+                    }
+                })
+            }
+            if (actionType.action === "create-option") {
+                var valuesArray = value.map((item: any) => {
+                    return item.value
+                })
+                valuesArray.map((item: any) => {
+                    var index = contactDetails.type.findIndex(x => x === item);
+                    if (index === -1) {
+                        tempTypeFilter = [...tempTypeFilter, item]
+                    }
+                })
+            }
+            if (actionType.action === "remove-value") {
+                var valuesArray = value.map((item: any) => {
+                    return item.value
+                })
+                tempTypeFilter = valuesArray
+            }
+            if (actionType.action === "clear") {
+                tempTypeFilter = []
+            }
 
+            setContactDetails({ ...contactDetails, type: tempTypeFilter })
         }
+
+    const handleToastClose = () => {
+        dispatch(navigationSlice.actions.setContactsUpdatePanelDialogOpen(false))
+
+
+    }
 
     const ToastMessage = () => {
         return (
@@ -389,15 +563,16 @@ export const AddGooglePanel: React.FunctionComponent<Props> = ({ }) => {
         await addDoc(collection(db, "contacts"), {
             displayName: contactDetails.name ? contactDetails.name : "",
             displayName_lowerCase: contactDetails.name ? contactDetails.name.toLowerCase() : "",
-            position: contactDetails.position,
-            company: contactDetails.company,
-            company_lowerCase: contactDetails.company?.toLowerCase(),
+            position: contactDetails.position ? contactDetails.position : "",
+            company: contactDetails.company ? contactDetails.company : "",
+            company_lowerCase: contactDetails.company? contactDetails.company?.toLowerCase(): "",
             address: contactDetails.address,
             mobile: contactDetails.mobile,
             office: contactDetails.office,
             email: contactDetails.email,
             industry: contactDetails.industry,
             region: contactDetails.region,
+            type: contactDetails.type,
             priority: "normal",
         })
             .then((result) => {
@@ -416,14 +591,14 @@ export const AddGooglePanel: React.FunctionComponent<Props> = ({ }) => {
 
     }
 
-    
+
 
     return (
         <StyledPanelContainer>
             <StyledTitleDiv>
-            <StyledIcon onClick={() => handleClick("selectgoogle", -1)} icon="arrow-left" intent="primary" size={24} />
+                <StyledIcon onClick={() => handleClick("initial", -1)} icon="arrow-left" intent="primary" size={24} />
                 <StyledTitleText>
-                     Contact Details
+                    Contact Details
                 </StyledTitleText>
             </StyledTitleDiv>
             {/* <StyledText>
@@ -469,35 +644,41 @@ export const AddGooglePanel: React.FunctionComponent<Props> = ({ }) => {
                 value={contactDetails?.address}
                 onChange={(e) => setContactDetails({ ...contactDetails, address: e.target.value })}
             />
-            <StyledInputGroup
-                large={true}
-                placeholder="Mobile No"
-                /* rightElement={lockButton} */
-                leftIcon={"mobile-phone"}
-                /* small={small} */
-                type={"text"}
-                value={contactDetails?.mobile}
-                onChange={(e) => setContactDetails({ ...contactDetails, mobile: e.target.value })}
+            <CreatableSelect
+                components={{ Placeholder, Input, ValueContainer }}
+                isClearable
+                key="Mobile"
+                placeholder="Mobile"
+                styles={customSelectStyles}
+                //@ts-ignore
+                menuPortalTarget={document.querySelector(".bp3-portal")}
+                options={phoneNumbers}
+                onChange={onSelectMobile}
+                value={contactDetails.mobile !== "" ? { value: contactDetails.mobile, label: contactDetails.mobile } : null}
             />
-            <StyledInputGroup
-                large={true}
-                placeholder="Office No"
-                /* rightElement={lockButton} */
-                leftIcon={"phone"}
-                /* small={small} */
-                type={"text"}
-                value={contactDetails?.office}
-                onChange={(e) => setContactDetails({ ...contactDetails, office: e.target.value })}
+            <CreatableSelect
+                components={{ Placeholder, Input, ValueContainer }}
+                isClearable
+                key="Office"
+                placeholder="Office"
+                styles={customSelectStyles}
+                //@ts-ignore
+                menuPortalTarget={document.querySelector(".bp3-portal")}
+                options={phoneNumbers}
+                onChange={onSelectOffice}
+                value={contactDetails.office !== "" ? { value: contactDetails.office, label: contactDetails.office } : null}
             />
-            <StyledInputGroup
-                large={true}
-                placeholder="Email Address"
-                /* rightElement={lockButton} */
-                leftIcon={"envelope"}
-                /* small={small} */
-                type={"text"}
-                value={contactDetails?.email}
-                onChange={(e) => setContactDetails({ ...contactDetails, email: e.target.value })}
+            <CreatableSelect
+                components={{ Placeholder, Input, ValueContainer }}
+                isClearable
+                key="Email"
+                placeholder="Email"
+                styles={customSelectStyles}
+                //@ts-ignore
+                menuPortalTarget={document.querySelector(".bp3-portal")}
+                options={emailAddresses}
+                onChange={onSelectEmail}
+                value={contactDetails.email !== "" ? { value: contactDetails.email, label: contactDetails.email } : null}
             />
             <CreatableSelect
                 /* ref={suburbRef} */
@@ -509,7 +690,7 @@ export const AddGooglePanel: React.FunctionComponent<Props> = ({ }) => {
                 placeholder="Industry"
                 styles={customSelectStyles}
                 //@ts-ignore
-                menuPortalTarget={document.querySelector(".bp3-dialog")}
+                menuPortalTarget={document.querySelector(".bp3-portal")}
                 options={formattedIndustries}
                 onChange={onSelectIndustry}
                 value={contactDetails.industry.map((industry) => { return { value: industry, label: industry } })}
@@ -524,10 +705,25 @@ export const AddGooglePanel: React.FunctionComponent<Props> = ({ }) => {
                 placeholder="Region"
                 styles={customSelectStyles}
                 //@ts-ignore
-                menuPortalTarget={document.querySelector(".bp3-dialog")}
+                menuPortalTarget={document.querySelector(".bp3-portal")}
                 options={formattedRegions}
                 onChange={onSelectRegion}
                 value={contactDetails.region.map((region) => { return { value: region, label: region } })}
+            />
+            <CreatableSelect
+                /* ref={suburbRef} */
+                components={{ Placeholder, Input, ValueContainer }}
+
+                isClearable
+                key="type"
+                isMulti
+                placeholder="Type"
+                styles={customSelectStyles}
+                //@ts-ignore
+                menuPortalTarget={document.querySelector(".bp3-portal")}
+                options={formattedTypes}
+                onChange={onSelectType}
+                value={contactDetails.type.map((type) => { return { value: type, label: type } })}
             />
 
             <StyledButton large={true} intent="success" onClick={() => submitContact()}>Submit</StyledButton>
@@ -542,4 +738,4 @@ export const AddGooglePanel: React.FunctionComponent<Props> = ({ }) => {
 
 }
 
-export default AddGooglePanel
+export default AddMicrosoftPanel

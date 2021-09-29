@@ -42,6 +42,7 @@ export const ContactsList: React.FunctionComponent<Props> = ({ /* propertyData, 
 
   const contactsIndustryFilter = useAppSelector((state) => state.navigation.contactsIndustryFilter)
   const contactsRegionFilter = useAppSelector((state) => state.navigation.contactsRegionFilter)
+  const contactsTypeFilter = useAppSelector((state) => state.navigation.contactsTypeFilter)
   const contactsPriorityFilter = useAppSelector((state) => state.navigation.contactsPriorityFilter)
   const search = useAppSelector((state) => state.navigation.contactsSearch)
 
@@ -87,6 +88,21 @@ export const ContactsList: React.FunctionComponent<Props> = ({ /* propertyData, 
       })
       if (showRegion === false)
         return showRegion
+    }
+
+    if (contactsTypeFilter.length !== 0) {
+      var showType = false
+      contact.type.map((contactType: string) => {
+        contactsTypeFilter.map((filterType) => {
+          if (filterType === contactType) {
+            if (showType === false) {
+              showType = true
+            }
+          } /* else return false */
+        })
+      })
+      if (showType === false)
+        return showType
     }
 
     if (contactsPriorityFilter.length !== 0) {

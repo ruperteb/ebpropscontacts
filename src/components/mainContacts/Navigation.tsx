@@ -105,6 +105,7 @@ export const Navigation: React.FunctionComponent<Props> = ({ }) => {
 
     const contactsIndustryFilter = useAppSelector((state) => state.navigation.contactsIndustryFilter)
     const contactsRegionFilter = useAppSelector((state) => state.navigation.contactsRegionFilter)
+    const contactsTypeFilter = useAppSelector((state) => state.navigation.contactsTypeFilter)
     const contactsPriorityFilter = useAppSelector((state) => state.navigation.contactsPriorityFilter)
 
     var contactIndustryData = contactsData.map((contact: any) => { return contact.industry })
@@ -137,6 +138,22 @@ export const Navigation: React.FunctionComponent<Props> = ({ }) => {
     
     var formattedRegions = distinctRegions.map((region) => {
         return { value: region, label: region }
+    })
+
+    var contactTypeData = contactsData.map((contact: any) => { return contact.type })
+
+    let combinedContactTypeData: any = []
+
+    contactTypeData.map((contact) => {
+        contact.map((type:any) => {
+            combinedContactTypeData = [...combinedContactTypeData, type]
+        })
+    })
+    
+    var distinctTypes:string[] = Array.from(new Set(combinedContactTypeData.map((type: string) => { return type })))
+    
+    var formattedTypes = distinctTypes.map((type) => {
+        return { value: type, label: type }
     })
 
     const priorityOptions = [
@@ -228,6 +245,33 @@ export const Navigation: React.FunctionComponent<Props> = ({ }) => {
             dispatch(navigationSlice.actions.setContactsRegionFilter(tempRegionFilter))
         }, [contactsRegionFilter])
 
+        const onSelectType = React.useCallback(
+            (value: any, actionType: any) => {
+                var tempTypeFilter = contactsTypeFilter
+                if (actionType.action === "select-option") {
+                    var valuesArray = value.map((item: any) => {
+                        return item.value
+                    })
+                    valuesArray.map((item: string) => {
+                        var index = contactsTypeFilter.findIndex(x => x === item);
+                        if (index === -1) {
+                            tempTypeFilter = [...tempTypeFilter, item]
+                        }
+                    })
+                }
+                if (actionType.action === "remove-value") {
+                    var valuesArray = value.map((item: any) => {
+                        return item.value
+                    })
+                    tempTypeFilter = valuesArray
+                }
+                if (actionType.action === "clear") {
+                    tempTypeFilter = []
+                }
+    
+                dispatch(navigationSlice.actions.setContactsTypeFilter(tempTypeFilter))
+            }, [contactsTypeFilter])
+
         const onSelectPriority = React.useCallback(
             (value: any, actionType: any) => {
                 var tempPriorityFilter = contactsPriorityFilter
@@ -311,6 +355,16 @@ export const Navigation: React.FunctionComponent<Props> = ({ }) => {
                                     options={formattedRegions}
                                     onChange={onSelectRegion}
                                     value={contactsRegionFilter.map((region) => { return { value: region, label: region } })}
+                                />
+                                <Select
+                                    /* ref={suburbRef} */
+                                    key="type"
+                                    isMulti
+                                    placeholder="Type"
+                                    styles={customSelectStyles}
+                                    options={formattedTypes}
+                                    onChange={onSelectType}
+                                    value={contactsTypeFilter.map((type) => { return { value: type, label: type } })}
                                 />
                                 <Select
                                     /* ref={suburbRef} */

@@ -1,11 +1,13 @@
 import React from "react"
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth, signOut, updateProfile } from "firebase/auth";
 
 import {
     Button,
 } from "@blueprintjs/core";
 
 import styled from 'styled-components'
+
+import { Login } from '@microsoft/mgt-react';
 
 
 const StyledNavigationContainer = styled.div`
@@ -64,6 +66,11 @@ const StyledButton = styled(Button)`
     display: flex;
 `
 
+const StyledLogin = styled(Login)`
+    display: flex;
+    margin: auto;
+`
+
 interface Props {
 
 }
@@ -72,13 +79,19 @@ export const Header: React.FunctionComponent<Props> = ({ }) => {
 
     const auth = getAuth();
     
-    /* console.log(auth.currentUser?.displayName) */
+
+    /* console.log("current user",auth.currentUser?.email)
+    if (auth.currentUser) {
+        if(auth.currentUser?.email === "mark@ellisbrown.co.za")
+        updateProfile(auth.currentUser, { displayName: "Mark Ellis Brown" })
+    } */
 
     return (
         <StyledNavigationContainer>
             <StyledLeftDiv>
-                <StyledLoginText>Logged In:</StyledLoginText>
-                <StyledUserText>{auth.currentUser?.displayName}</StyledUserText>
+                <StyledLoginText>Microsoft Account:</StyledLoginText>
+                {/* <StyledUserText>{auth.currentUser?.displayName}</StyledUserText> */}
+                <StyledLogin></StyledLogin>
             </StyledLeftDiv>
 
             <StyledTitleDiv>

@@ -116,7 +116,7 @@ export const NotesListItem: React.FunctionComponent<Props> = ({ contact, note, i
     const [showDeleteNotePopup, setShowDeleteNotePopup] = React.useState(false)
 
     const deleteNote = async () => {
-        await deleteDoc(doc(db, "beauhaus/" + contact.id + "/notes/", note.id));
+        await deleteDoc(doc(db, "contacts/" + contact.id + "/notes/", note.id));
         setShowDeleteNotePopup(false)
         dispatch(navigationSlice.actions.setSelectedContactRefresh(contact.id))
     }

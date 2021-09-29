@@ -4,12 +4,13 @@ import { getFirestore } from 'firebase/firestore';
 /* import { getAuth, signInWithEmailAndPassword } from "firebase/auth"; */
 
 const firebaseConfig = {
-    apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
-    authDomain: "illstoncontacts.firebaseapp.com",
-    projectId: "illstoncontacts",
-    storageBucket: "illstoncontacts.appspot.com",
-    messagingSenderId: "646424163571",
-    appId: "1:646424163571:web:1205191e7c759a7e16b386"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: "ebpropscontacts.firebaseapp.com",
+  projectId: "ebpropscontacts",
+  storageBucket: "ebpropscontacts.appspot.com",
+  messagingSenderId: "48645150743",
+  appId: "1:48645150743:web:3cd87f2fb6c8cc6e7ee452",
+  measurementId: "G-2D782K2WYG"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -92,11 +93,11 @@ signInWithEmailAndPassword(auth, email, password)
 }; */
 
 export {
- /*  auth, */
+  /*  auth, */
   db,
- /*  signInWithGoogle,
-  signInWithEmailAndPassword,
-  registerWithEmailAndPassword,
-  sendPasswordResetEmail,
-  logout, */
+  /*  signInWithGoogle,
+   signInWithEmailAndPassword,
+   registerWithEmailAndPassword,
+   sendPasswordResetEmail,
+   logout, */
 };

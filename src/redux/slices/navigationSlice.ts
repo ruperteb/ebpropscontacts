@@ -13,6 +13,25 @@ type GoogleContactsImportDetails = {
     office?: string
 }
 
+interface MSPhone {
+    type: string
+    number: string
+}
+
+interface MSEmail {
+    address: string
+    relevanceScore: number
+    selectionLikelihood: string
+}
+
+interface MSContact {
+    displayName?: string
+    companyName?: string
+    jobTitle?: string
+    phones?: MSPhone[]
+    scoredEmailAddresses?: MSEmail[]
+}
+
 export interface NavigationState {
 
     accessToken: string
@@ -21,6 +40,7 @@ export interface NavigationState {
     contactsSearch: string
     contactsRegionFilter: string[]
     contactsIndustryFilter: string[]
+    contactsTypeFilter: string[]
     contactsPriorityFilter: string[]
 
     expandedContact: boolean | string
@@ -40,6 +60,8 @@ export interface NavigationState {
     googleContactsSearch: string
     googleContactsSearchResults: gapi.client.people.SearchResult[] | undefined
     googleContactsImportDetails: GoogleContactsImportDetails
+
+    microsoftContactImportDetails: MSContact
     
 
 
@@ -53,6 +75,7 @@ const initialState: NavigationState = {
     contactsSearch: "",
     contactsRegionFilter: [],
     contactsIndustryFilter: [],
+    contactsTypeFilter: [],
     contactsPriorityFilter: [],
 
     expandedContact: false,
@@ -72,6 +95,8 @@ const initialState: NavigationState = {
     googleContactsSearch: "",
     googleContactsSearchResults: [],
     googleContactsImportDetails: {},
+
+    microsoftContactImportDetails:{} ,
 
 };
 
@@ -100,6 +125,9 @@ export const navigationSlice = createSlice({
         },
         setContactsRegionFilter: (state, action: PayloadAction<string[]>) => {
             state.contactsRegionFilter = action.payload;
+        },
+        setContactsTypeFilter: (state, action: PayloadAction<string[]>) => {
+            state.contactsTypeFilter = action.payload;
         },
         setContactsPriorityFilter: (state, action: PayloadAction<string[]>) => {
             state.contactsPriorityFilter = action.payload;
@@ -143,6 +171,9 @@ export const navigationSlice = createSlice({
         setGoogleContactsImportDetails: (state, action: PayloadAction<GoogleContactsImportDetails>) => {
             state.googleContactsImportDetails = action.payload;
         },
+        setMicrosoftContactImportDetails: (state, action: PayloadAction<MSContact>) => {
+            state.microsoftContactImportDetails = action.payload;
+        },
 
 
     },
@@ -160,7 +191,7 @@ export const navigationSlice = createSlice({
     }, */
 });
 
-export const { setAccessToken, setContactsData, setContactsSearch, setContactsIndustryFilter, setContactsRegionFilter, setContactsPriorityFilter, setExpandedContact, setContactsPanelDialogOpen, setContactsPanelStackPage, setContactsPanelStackDirection, setContactsUpdatePanelDialogOpen, setSelectedContact, setAddNotePanelDialogOpen, setUpdateNotePanelDialogOpen, setSelectedContactRefresh, setSelectedNote, setGoogleContactsSearch, setGoogleContactsSearchResults, setGoogleContactsImportDetails } = navigationSlice.actions;
+export const { setAccessToken, setContactsData, setContactsSearch, setContactsIndustryFilter, setContactsRegionFilter, setContactsTypeFilter, setContactsPriorityFilter, setExpandedContact, setContactsPanelDialogOpen, setContactsPanelStackPage, setContactsPanelStackDirection, setContactsUpdatePanelDialogOpen, setSelectedContact, setAddNotePanelDialogOpen, setUpdateNotePanelDialogOpen, setSelectedContactRefresh, setSelectedNote, setGoogleContactsSearch, setGoogleContactsSearchResults, setGoogleContactsImportDetails, setMicrosoftContactImportDetails } = navigationSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

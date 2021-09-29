@@ -8,9 +8,13 @@ import "./firebaseSetup"
 import { store } from './redux/store';
 import { Provider } from 'react-redux';
 
+import { Providers } from '@microsoft/mgt-element';
+import { Msal2Provider } from '@microsoft/mgt-msal2-provider';
 
-
-
+Providers.globalProvider = new Msal2Provider({
+  clientId: process.env.REACT_APP_MS_CLIENT_ID!,
+  scopes: ['calendars.read', 'user.read', 'openid', 'profile', 'people.read', 'user.readbasic.all']
+});
 
 
 ReactDOM.render(

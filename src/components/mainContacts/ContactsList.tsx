@@ -40,7 +40,7 @@ export const ContactsList: React.FunctionComponent<Props> = ({ /* propertyData, 
 
   const contactsData = useAppSelector((state) => state.navigation.contactsData)
 
-  const contactsIndustryFilter = useAppSelector((state) => state.navigation.contactsIndustryFilter)
+  const contactsSectorFilter = useAppSelector((state) => state.navigation.contactsSectorFilter)
   const contactsRegionFilter = useAppSelector((state) => state.navigation.contactsRegionFilter)
   const contactsTypeFilter = useAppSelector((state) => state.navigation.contactsTypeFilter)
   const contactsPriorityFilter = useAppSelector((state) => state.navigation.contactsPriorityFilter)
@@ -60,19 +60,19 @@ export const ContactsList: React.FunctionComponent<Props> = ({ /* propertyData, 
      if (!checkDatesEqual(filterData?.filterVariables!.earliestOccMin, startDate)) { if (!checkDatesGreaterThanOrEqual(getEarliestOccDate(property), filterData?.filterVariables!.earliestOccMin)) return false }
      if (!checkDatesEqual(filterData?.filterVariables!.earliestOccMax, startDate)) { if (!checkDatesLessThanOrEqual(getEarliestOccDate(property), filterData?.filterVariables!.earliestOccMax)) return false }
      return true */
-    if (contactsIndustryFilter.length !== 0) {
-      var showIndustry = false
-      contact.industry.map((contactIndustry: string) => {
-        contactsIndustryFilter.map((filterIndustry) => {
-          if (filterIndustry === contactIndustry) {
-            if (showIndustry === false) {
-              showIndustry = true
+    if (contactsSectorFilter.length !== 0) {
+      var showSector = false
+      contact.sector.map((contactSector: string) => {
+        contactsSectorFilter.map((filterSector) => {
+          if (filterSector === contactSector) {
+            if (showSector === false) {
+              showSector = true
             }
           } /* else return false */
         })
       })
-      if (showIndustry === false)
-        return showIndustry
+      if (showSector === false)
+        return showSector
     }
 
     if (contactsRegionFilter.length !== 0) {

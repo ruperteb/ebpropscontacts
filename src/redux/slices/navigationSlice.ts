@@ -39,7 +39,7 @@ export interface NavigationState {
     contactsData: DocumentData[]
     contactsSearch: string
     contactsRegionFilter: string[]
-    contactsIndustryFilter: string[]
+    contactsSectorFilter: string[]
     contactsTypeFilter: string[]
     contactsPriorityFilter: string[]
 
@@ -74,7 +74,7 @@ const initialState: NavigationState = {
     contactsData: [],
     contactsSearch: "",
     contactsRegionFilter: [],
-    contactsIndustryFilter: [],
+    contactsSectorFilter: [],
     contactsTypeFilter: [],
     contactsPriorityFilter: [],
 
@@ -120,8 +120,8 @@ export const navigationSlice = createSlice({
         setContactsSearch: (state, action: PayloadAction<string>) => {
             state.contactsSearch = action.payload;
         },
-        setContactsIndustryFilter: (state, action: PayloadAction<string[]>) => {
-            state.contactsIndustryFilter = action.payload;
+        setContactsSectorFilter: (state, action: PayloadAction<string[]>) => {
+            state.contactsSectorFilter = action.payload;
         },
         setContactsRegionFilter: (state, action: PayloadAction<string[]>) => {
             state.contactsRegionFilter = action.payload;
@@ -191,7 +191,7 @@ export const navigationSlice = createSlice({
     }, */
 });
 
-export const { setAccessToken, setContactsData, setContactsSearch, setContactsIndustryFilter, setContactsRegionFilter, setContactsTypeFilter, setContactsPriorityFilter, setExpandedContact, setContactsPanelDialogOpen, setContactsPanelStackPage, setContactsPanelStackDirection, setContactsUpdatePanelDialogOpen, setSelectedContact, setAddNotePanelDialogOpen, setUpdateNotePanelDialogOpen, setSelectedContactRefresh, setSelectedNote, setGoogleContactsSearch, setGoogleContactsSearchResults, setGoogleContactsImportDetails, setMicrosoftContactImportDetails } = navigationSlice.actions;
+export const { setAccessToken, setContactsData, setContactsSearch, setContactsSectorFilter, setContactsRegionFilter, setContactsTypeFilter, setContactsPriorityFilter, setExpandedContact, setContactsPanelDialogOpen, setContactsPanelStackPage, setContactsPanelStackDirection, setContactsUpdatePanelDialogOpen, setSelectedContact, setAddNotePanelDialogOpen, setUpdateNotePanelDialogOpen, setSelectedContactRefresh, setSelectedNote, setGoogleContactsSearch, setGoogleContactsSearchResults, setGoogleContactsImportDetails, setMicrosoftContactImportDetails } = navigationSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

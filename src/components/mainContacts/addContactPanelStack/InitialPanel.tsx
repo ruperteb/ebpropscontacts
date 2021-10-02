@@ -146,7 +146,7 @@ export const InitialPanel: React.FunctionComponent<Props> = ({ }) => {
             </StyledText>
             <StyledButton large={true} intent="success" onClick={() => handleClick("addmanual", 1)}>Manual Contact</StyledButton>
             <StyledText style={{ marginTop: "1rem" }}>
-                Or import a contact details from MS Exchange:
+                Or import contact details from MS Exchange:
             </StyledText>
             <StyledPeoplePicker
                 id="people-picker"

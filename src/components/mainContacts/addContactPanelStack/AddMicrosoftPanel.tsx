@@ -118,8 +118,8 @@ const Placeholder = (props: any) => {
     if (props.selectProps.placeholder === "Office") {
         placeholder = "Office No"
     }
-    if (props.selectProps.placeholder === "Industry") {
-        placeholder = "Industry"
+    if (props.selectProps.placeholder === "Sector") {
+        placeholder = "Sector"
     }
     if (props.selectProps.placeholder === "Region") {
         placeholder = "Region"
@@ -162,7 +162,7 @@ const ValueContainer = ({ children, ...props }) => {
     if (props.selectProps.placeholder === "Office") {
         icon = "phone"
     }
-    if (props.selectProps.placeholder === "Industry") {
+    if (props.selectProps.placeholder === "Sector") {
         icon = "office"
     }
     if (props.selectProps.placeholder === "Region") {
@@ -219,7 +219,7 @@ export const AddMicrosoftPanel: React.FunctionComponent<Props> = ({ }) => {
         mobile?: string,
         office?: string,
         email?: string,
-        industry: string[],
+        sector: string[],
         region: string[],
         type: string[]
     }
@@ -240,7 +240,7 @@ export const AddMicrosoftPanel: React.FunctionComponent<Props> = ({ }) => {
     const getOffice = () => {
         var office = ""
         microsoftContactImportDetails.phones?.filter((phone) => {
-            if (phone.type === "office") {
+            if (phone.type === "business" || phone.type === "work" || phone.type === "office" ) {
                 office = phone.number
             }
         })
@@ -265,7 +265,7 @@ export const AddMicrosoftPanel: React.FunctionComponent<Props> = ({ }) => {
         mobile: getMobile(),
         office: getOffice(),
         email: getEmail(),
-        industry: [],
+        sector: [],
         region: [],
         type: []
     })
@@ -275,20 +275,20 @@ export const AddMicrosoftPanel: React.FunctionComponent<Props> = ({ }) => {
 
     const contactsData = useAppSelector((state) => state.navigation.contactsData)
 
-    var contactIndustryData = contactsData.map((contact: any) => { return contact.industry })
+    var contactSectorData = contactsData.map((contact: any) => { return contact.sector })
 
-    let combinedContactIndustryData: any = []
+    let combinedContactSectorData: any = []
 
-    contactIndustryData.map((contact) => {
-        contact.map((industry: any) => {
-            combinedContactIndustryData = [...combinedContactIndustryData, industry]
+    contactSectorData.map((contact) => {
+        contact.map((sector: any) => {
+            combinedContactSectorData = [...combinedContactSectorData, sector]
         })
     })
 
-    var distinctIndustries: string[] = Array.from(new Set(combinedContactIndustryData.map((industry: string) => { return industry })))
+    var distinctSectors: string[] = Array.from(new Set(combinedContactSectorData.map((sector: string) => { return sector })))
 
-    var formattedIndustries = distinctIndustries.map((industry) => {
-        return { value: industry, label: industry }
+    var formattedSectors = distinctSectors.map((sector) => {
+        return { value: sector, label: sector }
     })
 
     var contactRegionData = contactsData.map((contact: any) => { return contact.region })
@@ -416,18 +416,18 @@ export const AddMicrosoftPanel: React.FunctionComponent<Props> = ({ }) => {
             }
         }
 
-    const onSelectIndustry =
+    const onSelectSector =
         (value: any, actionType: any) => {
-            var tempIndustryFilter = contactDetails.industry
+            var tempSectorFilter = contactDetails.sector
             if (actionType.action === "select-option") {
 
                 var valuesArray = value.map((item: any) => {
                     return item.value
                 })
                 valuesArray.map((item: any) => {
-                    var index = contactDetails.industry.findIndex(x => x === item);
+                    var index = contactDetails.sector.findIndex(x => x === item);
                     if (index === -1) {
-                        tempIndustryFilter = [...tempIndustryFilter, item]
+                        tempSectorFilter = [...tempSectorFilter, item]
                     }
                 })
             }
@@ -436,9 +436,9 @@ export const AddMicrosoftPanel: React.FunctionComponent<Props> = ({ }) => {
                     return item.value
                 })
                 valuesArray.map((item: any) => {
-                    var index = contactDetails.industry.findIndex(x => x === item);
+                    var index = contactDetails.sector.findIndex(x => x === item);
                     if (index === -1) {
-                        tempIndustryFilter = [...tempIndustryFilter, item]
+                        tempSectorFilter = [...tempSectorFilter, item]
                     }
                 })
             }
@@ -446,13 +446,13 @@ export const AddMicrosoftPanel: React.FunctionComponent<Props> = ({ }) => {
                 var valuesArray = value.map((item: any) => {
                     return item.value
                 })
-                tempIndustryFilter = valuesArray
+                tempSectorFilter = valuesArray
             }
             if (actionType.action === "clear") {
-                tempIndustryFilter = []
+                tempSectorFilter = []
             }
 
-            setContactDetails({ ...contactDetails, industry: tempIndustryFilter })
+            setContactDetails({ ...contactDetails, sector: tempSectorFilter })
         }
 
     const onSelectRegion =
@@ -570,7 +570,7 @@ export const AddMicrosoftPanel: React.FunctionComponent<Props> = ({ }) => {
             mobile: contactDetails.mobile,
             office: contactDetails.office,
             email: contactDetails.email,
-            industry: contactDetails.industry,
+            sector: contactDetails.sector,
             region: contactDetails.region,
             type: contactDetails.type,
             priority: "normal",
@@ -685,15 +685,15 @@ export const AddMicrosoftPanel: React.FunctionComponent<Props> = ({ }) => {
                 components={{ Placeholder, Input, ValueContainer }}
 
                 isClearable
-                key="industry"
+                key="sector"
                 isMulti
-                placeholder="Industry"
+                placeholder="Sector"
                 styles={customSelectStyles}
                 //@ts-ignore
                 menuPortalTarget={document.querySelector(".bp3-portal")}
-                options={formattedIndustries}
-                onChange={onSelectIndustry}
-                value={contactDetails.industry.map((industry) => { return { value: industry, label: industry } })}
+                options={formattedSectors}
+                onChange={onSelectSector}
+                value={contactDetails.sector.map((sector) => { return { value: sector, label: sector } })}
             />
             <CreatableSelect
                 /* ref={suburbRef} */

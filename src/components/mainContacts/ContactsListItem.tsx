@@ -43,7 +43,7 @@ interface StyledContactContainerProps {
 const StyledContactContainer = styled(motion.div) <StyledContactContainerProps>`
 display: grid;
 grid-template-columns: calc(1rem + 20px) 15% 1fr 1fr 1fr 1.5fr 1fr 1fr 1fr;
-grid-template-areas: "priority name position company phone email industry region type";
+grid-template-areas: "priority name position company phone email sector region type";
 /* height: 100px; */
 border-bottom: 1px solid #c3d0d8;
 padding: 0.5rem;
@@ -93,7 +93,7 @@ grid-column-start: 6;
 
 `
 
-const StyledContactIndustryDiv = styled(StyledContactDetailsDiv)`
+const StyledContactSectorDiv = styled(StyledContactDetailsDiv)`
 grid-column-start: 7;
 
 .bp3-popover2-target:focus {
@@ -541,30 +541,30 @@ export const ContactsListItem: React.FunctionComponent<Props> = ({ contact, inde
                                 <a href={`mailto:${contact.email}`} target="_blank" rel="noopener noreferrer">{contact.email}</a>
                             </StyledDetailsText>
                         </StyledContactEmailDiv>
-                        <StyledContactIndustryDiv onClick={handleContactClick}>
+                        <StyledContactSectorDiv onClick={handleContactClick}>
                             <StyledTooltip2
                                 /* className={Classes.TOOLTIP2_INDICATOR} */
                                 placement="right"
-                                content={<span>{contact.industry.map((industry: string, index: number) => {
+                                content={<span>{contact.sector.map((sector: string, index: number) => {
                                     if (index === 0) {
-                                        return industry
+                                        return sector
                                     } else {
-                                        return `, ${industry}`
+                                        return `, ${sector}`
                                     }
                                 })}</span>}
                             /* minimal={true} */
                             >
                                 <StyledDetailsText>
-                                    {contact.industry.map((industry: string, index: number) => {
+                                    {contact.sector.map((sector: string, index: number) => {
                                         if (index === 0) {
-                                            return industry
+                                            return sector
                                         } else {
-                                            return `, ${industry}`
+                                            return `, ${sector}`
                                         }
                                     })}
                                 </StyledDetailsText>
                             </StyledTooltip2>
-                        </StyledContactIndustryDiv>
+                        </StyledContactSectorDiv>
                         <StyledContactRegionDiv onClick={handleContactClick}>
                             <StyledTooltip2
                                 /* className={Classes.TOOLTIP2_INDICATOR} */

@@ -103,25 +103,25 @@ export const Navigation: React.FunctionComponent<Props> = ({ }) => {
             dispatch(navigationSlice.actions.setContactsSearch(e.target.value))
         }, [search])
 
-    const contactsIndustryFilter = useAppSelector((state) => state.navigation.contactsIndustryFilter)
+    const contactsSectorFilter = useAppSelector((state) => state.navigation.contactsSectorFilter)
     const contactsRegionFilter = useAppSelector((state) => state.navigation.contactsRegionFilter)
     const contactsTypeFilter = useAppSelector((state) => state.navigation.contactsTypeFilter)
     const contactsPriorityFilter = useAppSelector((state) => state.navigation.contactsPriorityFilter)
 
-    var contactIndustryData = contactsData.map((contact: any) => { return contact.industry })
+    var contactSectorData = contactsData.map((contact: any) => { return contact.sector })
     
-    let combinedContactIndustryData: any = []
+    let combinedContactSectorData: any = []
 
-    contactIndustryData.map((contact) => {
-        contact.map((industry:any) => {
-            combinedContactIndustryData = [...combinedContactIndustryData, industry]
+    contactSectorData.map((contact) => {
+        contact.map((sector:any) => {
+            combinedContactSectorData = [...combinedContactSectorData, sector]
         })
     })
     
-    var distinctIndustries:string[] = Array.from(new Set(combinedContactIndustryData.map((industry: string) => { return industry })))
+    var distinctSectors:string[] = Array.from(new Set(combinedContactSectorData.map((sector: string) => { return sector })))
    
-    var formattedIndustries  = distinctIndustries.map((industry) => {
-        return { value: industry, label: industry }
+    var formattedSectors  = distinctSectors.map((sector) => {
+        return { value: sector, label: sector }
     })
 
     var contactRegionData = contactsData.map((contact: any) => { return contact.region })
@@ -191,17 +191,17 @@ export const Navigation: React.FunctionComponent<Props> = ({ }) => {
         } */
     }
 
-    const onSelectIndustry = React.useCallback(
+    const onSelectSector = React.useCallback(
         (value: any, actionType: any) => {
-            var tempIndustryFilter = contactsIndustryFilter
+            var tempSectorFilter = contactsSectorFilter
             if (actionType.action === "select-option") {
                 var valuesArray = value.map((item: any) => {
                     return item.value
                 })
                 valuesArray.map((item: string) => {
-                    var index = contactsIndustryFilter.findIndex(x => x === item);
+                    var index = contactsSectorFilter.findIndex(x => x === item);
                     if (index === -1) {
-                        tempIndustryFilter = [...tempIndustryFilter, item]
+                        tempSectorFilter = [...tempSectorFilter, item]
                     }
                 })
             }
@@ -209,14 +209,14 @@ export const Navigation: React.FunctionComponent<Props> = ({ }) => {
                 var valuesArray = value.map((item: any) => {
                     return item.value
                 })
-                tempIndustryFilter = valuesArray
+                tempSectorFilter = valuesArray
             }
             if (actionType.action === "clear") {
-                tempIndustryFilter = []
+                tempSectorFilter = []
             }
 
-            dispatch(navigationSlice.actions.setContactsIndustryFilter(tempIndustryFilter))
-        }, [contactsIndustryFilter])
+            dispatch(navigationSlice.actions.setContactsSectorFilter(tempSectorFilter))
+        }, [contactsSectorFilter])
 
     const onSelectRegion = React.useCallback(
         (value: any, actionType: any) => {
@@ -337,13 +337,13 @@ export const Navigation: React.FunctionComponent<Props> = ({ }) => {
                                 <StyledPopoverHeading>Contacts Filters</StyledPopoverHeading>
                                 <Select
                                     /* ref={suburbRef} */
-                                    key="industry"
+                                    key="sector"
                                     isMulti
-                                    placeholder="Industry"
+                                    placeholder="Sector"
                                     styles={customSelectStyles}
-                                    options={formattedIndustries}
-                                    onChange={onSelectIndustry}
-                                    value={contactsIndustryFilter.map((industry) => { return { value: industry, label: industry } })}
+                                    options={formattedSectors}
+                                    onChange={onSelectSector}
+                                    value={contactsSectorFilter.map((sector) => { return { value: sector, label: sector } })}
 
                                 />
                                 <Select
